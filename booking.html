@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Consultation | Dr M Phiri</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<!-- ══════════════════════════════
+     BOOKING + PAY
+══════════════════════════════ -->
+<body>
+<nav>
+  <a class="nav-logo" onclick="showPage('booking')">
+    <div class="nav-logo-mark">P</div>
+    <div class="nav-logo-text">
+      <strong>Dr M Phiri</strong>
+      <small>Medical Weight Loss · Ballito</small>
+    </div>
+  </a>
+
+  <div class="nav-links-center" id="nav-links">
+    <a onclick="showPage('home')"         data-page="home">Home</a>
+    <a onclick="showPage('about')"        data-page="about">About</a>
+    <a onclick="showPage('services')"     data-page="services">Services</a>
+    <a onclick="showPage('testimonials')" data-page="testimonials">Reviews</a>
+    <a onclick="showPage('contact')"      data-page="contact">Contact</a>
+    <a onclick="showPage('booking')"      data-page="booking"  class="active">Book &amp; Pay</a>
+  </div>
+
+  <div class="nav-right">
+    <div class="nav-phone">065 989 3363</div>
+    <button class="nav-cta" onclick="showPage('booking')">Book Now</button>
+    <button class="mob-btn" onclick="toggleMobile()">☰</button>
+  </div>
+</nav>
+<div class="page" id="page-booking"><h2>Book &amp; Pay</h2></div>
+
+  <div style="background:var(--forest);padding:calc(var(--nav-h) + 2.5rem) var(--pad) 2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;">
+    <div>
+      <div class="eyebrow" style="color:var(--mint);">Book &amp; Pay Online</div>
+      <h1 style="font-family:var(--display);font-size:2.8rem;font-weight:700;color:#fff;line-height:1.1;margin-bottom:.4rem;">Schedule Your <em style="color:var(--mint);">Appointment</em></h1>
+      <p style="font-size:13.5px;color:rgba(255,255,255,.6);">In-person at Ballito or virtual nationwide · Secure online payment below</p>
+    </div>
+    <div style="text-align:right;"><div style="font-size:10px;color:rgba(255,255,255,.45);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;">Prefer to call?</div><div style="font-size:1.5rem;font-weight:700;color:var(--gold);">065 989 3363</div></div>
+  </div>
+  <div style="padding:2.5rem var(--pad);background:var(--paper);display:grid;grid-template-columns:1fr 340px;gap:2.5rem;align-items:start;">
+    <!-- LEFT -->
+    <div>
+      <!-- Step 1: Booking -->
+      <div style="background:#fff;border:1px solid var(--border);border-radius:20px;padding:2rem;margin-bottom:1.5rem;">
+        <h2 style="font-family:var(--display);font-size:1.6rem;font-weight:600;color:var(--charcoal);margin-bottom:1.5rem;">Step 1 — Schedule Your Visit</h2>
+        <div class="bstep">
+          <div class="bstep-num">1</div>
+          <div style="flex:1"><h4>Appointment Type</h4><p>How would you like to meet?</p>
+            <div class="atypes" style="margin-top:.85rem;">
+              <div class="atype sel" onclick="selectAtype(this,'In-Person')"><div class="atype-icon">🏥</div><div class="atype-name">In-Person</div><div class="atype-sub">Ballito</div></div>
+              <div class="atype"     onclick="selectAtype(this,'Virtual')"><div class="atype-icon">📹</div><div class="atype-name">Virtual</div><div class="atype-sub">Nationwide</div></div>
+              <div class="atype"     onclick="selectAtype(this,'Weight Loss')"><div class="atype-icon">⚖️</div><div class="atype-name">Weight Loss</div><div class="atype-sub">Programme</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="bstep">
+          <div class="bstep-num">2</div>
+          <div style="flex:1"><h4>Choose a Date</h4><p>Weekdays only · Saturdays 09:00 - 13:00</p>
+            <div style="margin-top:.85rem;">
+              <div class="cal-hdr"><button class="cal-nav" onclick="changeMonth(-1)">‹</button><h4 id="cal-title">March 2026</h4><button class="cal-nav" onclick="changeMonth(1)">›</button></div>
+              <div class="cal-grid" id="cal-grid"></div>
+            </div>
+          </div>
+        </div>
+        <div class="bstep">
+          <div class="bstep-num">3</div>
+          <div style="flex:1"><h4>Choose a Time</h4><p>Greyed out = unavailable</p>
+            <div class="tslots" style="margin-top:.85rem;">
+              <div class="tslot"      onclick="pickTime(this,'08:00')">08:00</div>
+              <div class="tslot"      onclick="pickTime(this,'08:30')">08:30</div>
+              <div class="tslot unav">09:00</div>
+              <div class="tslot"      onclick="pickTime(this,'09:30')">09:30</div>
+              <div class="tslot unav">10:00</div>
+              <div class="tslot"      onclick="pickTime(this,'10:30')">10:30</div>
+              <div class="tslot"      onclick="pickTime(this,'11:00')">11:00</div>
+              <div class="tslot unav">11:30</div>
+              <div class="tslot"      onclick="pickTime(this,'13:00')">13:00</div>
+              <div class="tslot"      onclick="pickTime(this,'13:30')">13:30</div>
+              <div class="tslot"      onclick="pickTime(this,'14:00')">14:00</div>
+              <div class="tslot unav">14:30</div>
+              <div class="tslot"      onclick="pickTime(this,'15:00')">15:00</div>
+              <div class="tslot"      onclick="pickTime(this,'15:30')">15:30</div>
+              <div class="tslot"      onclick="pickTime(this,'16:00')">16:00</div>
+              <div class="tslot unav">16:30</div>
+            </div>
+          </div>
+        </div>
+        <div class="bstep">
+          <div class="bstep-num">4</div>
+          <div style="flex:1"><h4>Your Details</h4><p>We'll send a confirmation to your email.</p>
+            <div style="margin-top:.9rem;">
+              <div class="fr" style="margin-bottom:.75rem;">
+                <div class="fg fg-lt"><label>First Name</label><input type="text" id="b-fname" placeholder="First name"></div>
+                <div class="fg fg-lt"><label>Last Name</label><input type="text" id="b-lname" placeholder="Last name"></div>
+              </div>
+              <div class="fr" style="margin-bottom:.75rem;">
+                <div class="fg fg-lt"><label>Email</label><input type="email" id="b-email" placeholder="your@email.com"></div>
+                <div class="fg fg-lt"><label>Phone</label><input type="tel" id="b-phone" placeholder="0XX XXX XXXX"></div>
+              </div>
+              <div class="fg fg-lt" style="margin-bottom:.75rem;"><label>Reason for Visit</label><select id="b-reason"><option value="">Select reason</option><option>Weight Loss Consultation</option><option>General Check-Up</option><option>Follow-Up</option><option>GLP-1 Program</option><option>Blood Test Review</option><option>Sick Note</option><option>Other</option></select></div>
+              <div class="fg fg-lt"><label>Notes (optional)</label><textarea id="b-notes" style="background:var(--paper);border:1.5px solid var(--border);border-radius:9px;padding:10px 13px;color:var(--charcoal);font-size:13px;font-family:var(--body);width:100%;outline:none;resize:vertical;min-height:70px;" placeholder="Any information Dr Phiri should know..."></textarea></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Step 2: Payment -->
+      <div class="pay-inbook">
+        <h3>Step 2 — Pay for Your Programme</h3>
+        <p>Select your plan and complete payment securely below.</p>
+        <!-- Plan pills -->
+        <div class="plan-pills">
+          <div class="plan-pill sel" onclick="inbookPickPlan(this,'Budget','3500',8)"><div class="pp-icon">💚</div><div class="pp-name">Budget</div><div class="pp-price">R3,500</div><div style="font-size:10px;color:var(--muted);">8 weeks</div></div>
+          <div class="plan-pill" onclick="inbookPickPlan(this,'Premium','8000',8)"><div class="pp-icon">⭐</div><div class="pp-name">Premium</div><div class="pp-price">R8,000</div><div style="font-size:10px;color:var(--muted);">8 weeks</div></div>
+          <div class="plan-pill" onclick="inbookPickPlan(this,'Executive','15000',12)"><div class="pp-icon">👑</div><div class="pp-name">Executive</div><div class="pp-price">R15,000</div><div style="font-size:10px;color:var(--muted);">12 weeks</div></div>
+          <div class="plan-pill" onclick="inbookPickPlan(this,'Consultation','500',1)"><div class="pp-icon">🩺</div><div class="pp-name">Consult</div><div class="pp-price">R500</div><div style="font-size:10px;color:var(--muted);">Once-off</div></div>
+        </div>
+        <!-- Includes -->
+        <div class="inc-box"><div class="inc-box-title">✅ Included — <span id="ib-plan-name">Budget Plan</span></div><ul id="ib-inc-list" style="padding:0;margin:0;"></ul></div>
+        <!-- Payment tabs -->
+        <div class="ptabs" style="margin-top:1.25rem;">
+          <div class="ptab sel" onclick="ibPickMethod(this,'card')"><div class="ptib-icon">💳</div><div class="ptib-name">Card</div></div>
+          <div class="ptab"     onclick="ibPickMethod(this,'eft')"><div class="ptib-icon">🏦</div><div class="ptib-name">EFT</div></div>
+          <div class="ptab"     onclick="ibPickMethod(this,'snapscan')"><div class="ptib-icon">📱</div><div class="ptib-name">SnapScan</div></div>
+        </div>
+        <!-- Card -->
+        <div id="ib-card-sec">
+          <div class="card-vis">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;"><div class="c-chip"></div><div class="c-mc"><span class="c1"></span><span class="c2"></span></div></div>
+            <div class="c-num" id="ib-d-num">•••• •••• •••• ••••</div>
+            <div class="c-bot"><div><div class="c-lbl">Card Holder</div><div class="c-val" id="ib-d-name">YOUR NAME</div></div><div><div class="c-lbl">Expires</div><div class="c-val" id="ib-d-exp">MM / YY</div></div></div>
+          </div>
+          <div class="pfi"><label>Cardholder Name</label><input type="text" placeholder="As on your card" oninput="document.getElementById('ib-d-name').textContent=this.value||'YOUR NAME'"></div>
+          <div class="pfi"><label>Card Number</label><input type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="ibFmtCard(this)"></div>
+          <div class="pfr"><div class="pfi"><label>Expiry</label><input type="text" placeholder="MM / YY" maxlength="7" oninput="ibFmtExp(this)"></div><div class="pfi"><label>CVV</label><input type="text" placeholder="•••" maxlength="4"></div></div>
+          <div class="secure-badge">🔒 <span>256-bit SSL encryption. Card details are never stored.</span></div>
+          <button class="pay-submit" onclick="doBookingAndPay('card')">🔒 Confirm &amp; Pay <span id="ib-btn-amt">R3,500</span></button>
+        </div>
+        <!-- EFT -->
+        <div id="ib-eft-sec" style="display:none;">
+          <p style="font-size:13px;color:var(--muted);margin-bottom:.9rem;line-height:1.7;">Use the details below. Reference: <strong style="color:var(--charcoal);">Your Name + Plan</strong></p>
+          <div class="eft-box">
+            <div class="er"><span>Bank</span><span>Standard Bank</span></div>
+            <div class="er"><span>Account Name</span><span>Dr M Phiri Medical Practice</span></div>
+            <div class="er"><span>Account Number</span><span>012 345 6789</span></div>
+            <div class="er"><span>Branch Code</span><span>051001</span></div>
+            <div class="er"><span>Reference</span><span>YourName + Plan</span></div>
+          </div>
+          <button class="pay-submit" style="margin-top:.9rem;" onclick="doBookingAndPay('eft')">📧 Confirm Booking &amp; Email EFT Details</button>
+        </div>
+        <!-- SnapScan -->
+        <div id="ib-ss-sec" style="display:none;text-align:center;padding:1.25rem 0;">
+          <div style="font-size:2.5rem;margin-bottom:.6rem;">📱</div>
+          <p style="font-size:14px;font-weight:700;color:var(--charcoal);margin-bottom:.3rem;">Scan to Pay with SnapScan</p>
+          <p style="font-size:12.5px;color:var(--muted);margin-bottom:1.25rem;">Search <strong>"Dr Phiri Ballito"</strong> in the SnapScan app.</p>
+          <div style="width:150px;height:150px;background:var(--paper);border:2px solid var(--border);border-radius:12px;margin:0 auto 1.25rem;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;"><span style="font-size:2rem;">QR</span><span style="font-size:9px;color:var(--muted);font-weight:700;letter-spacing:1px;">DR PHIRI BALLITO</span></div>
+          <button class="pay-submit" style="max-width:300px;margin:0 auto;" onclick="doBookingAndPay('snapscan')">✅ Confirm Booking &amp; Payment Done</button>
+        </div>
+      </div>
+    </div>
+    <!-- SIDEBAR -->
+    <div class="book-sidebar">
+      <div class="sum-card">
+        <h3>Appointment Summary</h3>
+        <div class="si"><span class="si-lbl">Type</span><span class="si-val" id="sum-type">In-Person</span></div>
+        <div class="si"><span class="si-lbl">Date</span><span class="si-val" id="sum-date">Select a date</span></div>
+        <div class="si"><span class="si-lbl">Time</span><span class="si-val" id="sum-time">Select a time</span></div>
+        <div class="si"><span class="si-lbl">Location</span><span class="si-val">Ballito, KZN</span></div>
+        <div class="si"><span class="si-lbl">Programme</span><span class="si-val" id="sum-plan">Budget Plan</span></div>
+        <div class="sum-total"><span>Total to Pay</span><strong id="sum-total-amt">R3,500</strong></div>
+      </div>
+      <button class="book-confirm-btn" onclick="doBookingAndPay('card')">✅ Confirm Booking</button>
+      <div style="margin-top:.85rem;background:#fff;border:1px solid var(--border);border-radius:14px;padding:1.1rem;text-align:center;font-size:11.5px;color:var(--muted);line-height:1.85;">
+        🔒 Secure &amp; confidential<br>
+        📋 Receipt emailed on payment<br>
+        📞 Cancel 24hrs before<br><br>
+        <strong style="color:var(--charcoal);">Questions?</strong><br>
+        <a href="tel:0659893363" style="color:var(--forest);font-weight:700;">065 989 3363</a>
+      </div>
+      <div style="margin-top:.85rem;background:var(--forest);border-radius:14px;padding:1.1rem;text-align:center;">
+        <div style="font-size:10.5px;color:var(--mint);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:.65rem;">Follow Us</div>
+        <div style="display:flex;justify-content:center;gap:8px;">
+          <a href="https://instagram.com" target="_blank" class="f-soc">📸</a>
+          <a href="https://facebook.com"  target="_blank" class="f-soc">👥</a>
+          <a href="https://tiktok.com"    target="_blank" class="f-soc">🎵</a>
+          <a href="https://wa.me/27659893363" target="_blank" class="f-soc">💬</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer><div class="f-logo">Dr M Phiri · <span>Medical Weight Loss Specialist</span></div><div class="f-links"><a onclick="showPage('home')">Home</a><a onclick="showPage('services')">Services</a><a onclick="showPage('contact')">Contact</a></div><div class="f-social"><a class="f-soc" href="https://instagram.com" target="_blank">📸</a><a class="f-soc" href="https://wa.me/27659893363" target="_blank">💬</a></div><p>© 2025 Dr M Phiri · Ballito</p></footer>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
