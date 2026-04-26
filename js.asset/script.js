@@ -3,7 +3,7 @@ const PLANS=[
    feats:['Full blood panel','Lifestyle analysis + body composition scan','Action plan','Meal plan','Workout plan','Follow up x 2' ]},
   {name:'Premium',price:'8,000',raw:8000,weeks:8,feat:true,badge:'Most Popular',
    feats:['Full blood panel','Lifestyle analysis + body composition scan','Action plan','Meal plan','2× weight loss drips / month','2× GLP-1 injections / month','Follow up']},
-  {name:'Executive',price:'15,000',raw:15000,weeks:12,feat:false,
+  {name:'Executive',price:'15,000',raw:10000,weeks:12,feat:false,
    feats:['Full blood panel','Lifestyle analysis + body composition scan','Meal plan','Gene-testing','Fully tailored GLP-1 programme','Follow up']}
 ];
 const TESTS=[
