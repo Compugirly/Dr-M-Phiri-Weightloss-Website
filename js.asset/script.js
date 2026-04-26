@@ -60,7 +60,7 @@ function goBook(name,amt,wks){
 }
 
 /* ─── NAVIGATION ─── */
-function showPage(name){
+function showPage(pageId){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   const t=document.getElementById('page-'+name);
   if(t)t.classList.add('active');
@@ -105,6 +105,7 @@ function pickDate(el,d){
   const sd=document.getElementById('sum-date');
   if(sd)sd.textContent=`${d} ${mn[calM]} ${calY}`;
 }
+
 
 /* ─── BOOKING ─── */
 function selectAtype(el,type){
