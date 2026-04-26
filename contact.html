@@ -14,7 +14,7 @@
 <body>
 
 <nav>
-  <a class="nav-logo" onclick="showPage('contact')">
+  <a class="nav-logo" href="index.html">
     <div class="nav-logo-mark">P</div>
     <div class="nav-logo-text">
       <strong>Dr M Phiri</strong>
@@ -24,17 +24,17 @@
 
   <!-- FIX: merged duplicate class attributes into one -->
   <div class="nav-links center" id="nav-links">
-    <a onclick="showPage('home')"         data-page="home">Home</a>
-    <a onclick="showPage('about')"        data-page="about">About</a>
-    <a onclick="showPage('services')"     data-page="services">Services</a>
-    <a onclick="showPage('testimonials')" data-page="testimonials">Reviews</a>
-    <a onclick="showPage('contact')"      data-page="contact" class="active">Contact</a>
-    <a onclick="showPage('booking')"      data-page="booking">Book &amp; Pay</a>
+    <a href="index.html"         data-page="home">Home</a>
+    <a href="about.html"        data-page="about">About</a>
+    <a href="services.html"     data-page="services">Services</a>
+    <a href="review.html" data-page="testimonials">Reviews</a>
+    <a href="contact.html"      data-page="contact" class="active">Contact</a>
+    <a href="booking.html"      data-page="booking">Book &amp; Pay</a>
   </div>
 
   <div class="nav-right">
     <div class="nav-phone">065 989 3363</div>
-    <button class="nav-cta" onclick="showPage('booking')">Book Now</button>
+    <a href="booking.html" class="nav-cta">Book Now</a>
     <button class="mob-btn" onclick="toggleMobile()">☰</button>
   </div>
 </nav>
@@ -191,6 +191,6 @@
 
 </div><!-- end #page-contact -->
 
-<script src="script.js"></script>
+<script src="js.asset/script.js" defer></script>
 </body>
 </html>

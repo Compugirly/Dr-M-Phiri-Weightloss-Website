@@ -62,12 +62,12 @@ function goBook(name,amt,wks){
 /* ─── NAVIGATION ─── */
 function showPage(pageId){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  const t=document.getElementById('page-'+name);
+  const t=document.getElementById('page-'+pageId);
   if(t)t.classList.add('active');
-  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.toggle('active',a.dataset.page===name));
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.toggle('active',a.dataset.page===pageId));
   window.scrollTo(0,0);
   document.getElementById('nav-links').classList.remove('open');
-  if(name==='booking')renderCal();
+  if(pageId==='booking')renderCal();
 }
 function toggleMobile(){document.getElementById('nav-links').classList.toggle('open');}
 

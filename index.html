@@ -10,7 +10,7 @@
 <body>
 <!-- NAV -->
 <nav>
-  <a class="nav-logo" onclick="showPage('home')">
+  <a class="nav-logo" href="index.html">
     <div class="nav-logo-mark">P</div>
     <div class="nav-logo-text">
       <strong>Dr M Phiri</strong>
@@ -19,17 +19,17 @@
   </a>
 
   <div class="nav-links center" id="nav-links">
-    <a onclick="showPage('home')"         data-page="home"         class="active">Home</a>
-    <a onclick="showPage('about')"        data-page="about">About</a>
-    <a onclick="showPage('services')"     data-page="services">Services</a>
-    <a onclick="showPage('testimonials')" data-page="testimonials">Reviews</a>
-    <a onclick="showPage('contact')"      data-page="contact">Contact</a>
-    <a onclick="showPage('booking')"      data-page="booking">Book &amp; Pay</a>
+    <a href="index.html"         data-page="home"         class="active">Home</a>
+    <a href="about.html"        data-page="about">About</a>
+    <a href="services.html"     data-page="services">Services</a>
+    <a href="review.html" data-page="testimonials">Reviews</a>
+    <a href="contact.html"      data-page="contact">Contact</a>
+    <a href="booking.html"      data-page="booking">Book &amp; Pay</a>
   </div>
 
   <div class="nav-right">
     <div class="nav-phone">065 989 3363</div>
-    <button class="nav-cta" onclick="showPage('booking')">Book Now</button>
+    <a href="booking.html" class="nav-cta">Book Now</a>
     <button class="mob-btn" onclick="toggleMobile()">☰</button>
   </div>
 </nav>
@@ -76,8 +76,8 @@
 
       <!-- buttons -->
       <div class="hero-btns">
-        <button class="btn-gold" onclick="showPage('booking')">Book a Consultation</button>
-        <button class="btn-outline" onclick="showPage('services')">View Programmes</button>
+        <a href="booking.html" class="btn-gold">Book a Consultation</a>
+        <a href="services.html" class="btn-outline">View Programmes</a>
       </div>
 
       <!-- trust badge cards — compact horizontal row -->
@@ -139,7 +139,7 @@
         <div class="feat-item"><div class="feat-icon">🧪</div><div><div class="feat-title">Full Blood Panel &amp; Gene Testing</div><div class="feat-desc">Comprehensive testing to understand your unique biology and build a truly personalised plan.</div></div></div>
         <div class="feat-item"><div class="feat-icon">🥗</div><div><div class="feat-title">Personalised Meal &amp; Lifestyle Plans</div><div class="feat-desc">Built around your food preferences, schedule, and medical profile. Not a generic plan.</div></div></div>
         <div style="margin-top:1.75rem;">
-          <button class="btn-primary" onclick="showPage('services')">View All Programmes →</button>
+          <a href="services.html" class="btn-primary">View All Programmes →</a>
         </div>
       </div>
       <div>
@@ -339,6 +339,6 @@
   <footer><div class="f-logo">Dr M Phiri · <span>Medical Weight Loss Specialist</span></div><div class="f-links"><a onclick="showPage('home')">Home</a><a onclick="showPage('services')">Services</a><a onclick="showPage('booking')">Book &amp; Pay</a></div><div class="f-social"><a class="f-soc" href="https://instagram.com" target="_blank">📸</a><a class="f-soc" href="https://facebook.com" target="_blank">👥</a><a class="f-soc" href="https://wa.me/27659893363" target="_blank">💬</a></div><p>© 2025 Dr M Phiri</p></footer>
 </div>
 
-<script src="script.js" defer></script>
+<script src="js.asset/script.js" defer></script>
 </body>
 </html>

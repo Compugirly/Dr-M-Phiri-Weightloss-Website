@@ -9,7 +9,7 @@
 
 <body>
     <nav>
-  <a class="nav-logo" onclick="showPage('about')">
+  <a class="nav-logo" href="index.html">
     <div class="nav-logo-mark">P</div>
     <div class="nav-logo-text">
       <strong>Dr M Phiri</strong>
@@ -18,17 +18,17 @@
   </a>
 
   <div class="nav-links center" id="nav-links">
-    <a onclick="showPage('home')"         data-page="home">Home</a>
-    <a onclick="showPage('about')"        data-page="about"       class="active">About</a>
-    <a onclick="showPage('services')"     data-page="services">Services</a>
-    <a onclick="showPage('testimonials')" data-page="testimonials">Reviews</a>
-    <a onclick="showPage('contact')"      data-page="contact">Contact</a>
-    <a onclick="showPage('booking')"      data-page="booking">Book &amp; Pay</a>
+    <a href="index.html"         data-page="home">Home</a>
+    <a href="about.html"        data-page="about"       class="active">About</a>
+    <a href="services.html"     data-page="services">Services</a>
+    <a href="review.html" data-page="testimonials">Reviews</a>
+    <a href="contact.html"      data-page="contact">Contact</a>
+    <a href="booking.html"      data-page="booking">Book &amp; Pay</a>
   </div>
 
   <div class="nav-right">
     <div class="nav-phone">065 989 3363</div>
-    <button class="nav-cta" onclick="showPage('booking')">Book Now</button>
+    <a href="booking.html" class="nav-cta">Book Now</a>
     <button class="mob-btn" onclick="toggleMobile()">☰</button>
   </div>
 </nav>
@@ -62,8 +62,8 @@
         </p>
 
         <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:3.5rem;">
-          <button class="btn-gold" onclick="showPage('booking')">Book a Consultation</button>
-          <button class="btn-outline" onclick="showPage('services')">View Programmes</button>
+          <a href="booking.html" class="btn-gold">Book a Consultation</a>
+          <a href="services.html" class="btn-outline">View Programmes</a>
         </div>
 
         <!-- stats row -->
@@ -178,7 +178,7 @@
             <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mint);margin-bottom:4px;">Call or WhatsApp</div>
             <div style="font-family:var(--display);font-size:1.6rem;font-weight:700;color:#fff;">065 989 3363</div>
           </div>
-          <button class="btn-gold" onclick="showPage('booking')">Book Now →</button>
+          <button class="btn-gold" href="booking.html">Book Now →</button>
         </div>
       </div>
     </div>
@@ -194,7 +194,7 @@
         </h2>
         <p style="font-size:13.5px;color:rgba(255,255,255,.4);margin-top:.5rem;max-width:400px;line-height:1.7;">A look inside Dr Phiri's practice in Ballito — where the journey begins.</p>
       </div>
-      <button class="btn-primary" onclick="showPage('booking')">Book a Visit →</button>
+      <button class="btn-primary" href="booking.html" >Book a Visit →</button>
     </div>
 
     <!-- bento photo grid — 2 tall + 2 medium + 1 wide -->
@@ -351,19 +351,19 @@
       <p style="color:rgba(255,255,255,.6);margin-top:.4rem;">In-person in Ballito or virtual nationwide.</p>
     </div>
     <div class="cta-band-actions">
-      <button class="btn-gold" onclick="showPage('booking')">Book &amp; Pay Online</button>
-      <button class="btn-outline" onclick="showPage('services')">View Programmes</button>
+      <button class="btn-gold" href="booking.html">Book &amp; Pay Online</button>
+      <button class="btn-outline" href="services.html">View Programmes</button>
     </div>
   </div>
 
   <footer>
     <div class="f-logo">Dr M Phiri · <span>Medical Weight Loss Specialist</span></div>
-    <div class="f-links"><a onclick="showPage('home')">Home</a><a onclick="sshowPage('services')">Services</a><a href="booking.html">Book &amp; Pay</a></div>
+    <div class="f-links"><a href="index.html">Home</a><a href="services.html">Services</a><a href="booking.html">Book &amp; Pay</a></div>
     <div class="f-social"><a class="f-soc" href="https://instagram.com" target="_blank">📸</a><a class="f-soc" href="https://wa.me/27659893363" target="_blank">💬</a></div>
     <p>© 2025 Dr M Phiri · Ballito, KZN</p>
   </footer>
 </div>
 
-<script src="script.js" defer></script>
+<script src="js.asset/script.js" defer></script>
 </body>
 </html>
