@@ -1,11 +1,21 @@
-const PLANS=[
-  {name:'Budget',price:'1,500',raw:1500,perMonth:6,feat:false,
-   feats:['Full blood panel','Lifestyle analysis + body composition scan','Action plan','Meal plan','Workout plan','Follow up x 2' ]},
-  {name:'Premium',price:'3,500',raw:3500,perMonth:6,feat:true,badge:'Most Popular',
-   feats:['Full blood panel','Lifestyle analysis + body composition scan','Action plan','Meal plan','2× weight loss drips / month','2× GLP-1 injections / month','Follow up']},
-  {name:'Executive',price:'10,000',raw:10000,perMonth:6,feat:false,
-   feats:['Full blood panel','Lifestyle analysis + body composition scan','Meal plan','Gene-testing','Fully tailored GLP-1 programme','Follow up']}
+const PLANS = [
+  {
+    name: "Budget", price: "1,500", raw: 1500, duration: 6, featured: false,
+    features: [ "Full blood panel",  "Lifestyle analysis + body composition scan",  "Action plan",  "Meal plan",  "Workout plan",  "Follow up x2"
+    ]
+  },
+  {
+    name: "Premium", price: "3,500", raw: 3500,  duration: 6, featured: true, badge: "Most Popular",
+    features: [ "Full blood panel",  "Lifestyle analysis + body composition scan",  "Action plan", "Meal plan",  "2× weight loss drips / month",  "2× GLP-1 injections / month",  "Follow up"
+    ]
+  },
+  {
+    name: "Executive", price: "10,000", raw: 10000, duration: 6, featured: false,
+    features: [ "Full blood panel", "Lifestyle analysis + body composition scan", "Meal plan", "Gene-testing", "Fully tailored GLP-1 programme",  "Follow up"
+    ]
+  }
 ];
+
 const TESTS=[
   {name:'Nomsa K.',sub:'Lost 18kg · Premium Plan',bg:'#2D6A4F',s:5,t:"Dr Phiri completely changed how I think about weight loss. He found out I had insulin resistance — something no one had checked before. Lost 18kg in 3 months."},
   {name:'Priya M.',sub:'Lost 12kg · Budget Plan',bg:'#C9A84C',s:5,t:"I've tried every diet. Dr Phiri's approach is different — it's medical. He addresses the actual reason you gain weight. Not just telling you to eat less. Incredible."},
@@ -24,19 +34,30 @@ const PF={
 let curPlan={name:'Budget',amount:'1500',months:'6'};
 
 /* ─── RENDER ─── */
-function renderPricing(id){
-  const el=document.getElementById(id);if(!el)return;
-  el.innerHTML=PLANS.map(p=>`
-    <div class="pc ${p.feat?'featured':''}">
-      ${p.badge?`<div class="pc-ribbon">${p.badge}</div>`:''}
-      <div class="pc-tier">${p.name} Plan</div>
+function renderPricing(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  el.innerHTML = PLANS.map(p => `
+    <div class="pc ${p.featured ? 'featured' : ''}">   
+      ${p.badge ? `<div class="pc-ribbon">${p.badge}</div>` : ''}
+      <div class="pc-tier">${p.name} Plan</div>  
       <div class="pc-price"><sup>R</sup>${p.price}</div>
-      <div class="pc-months">${p.months}-months Programme · Per month Payment</div>
-      <ul class="pc-list">${p.feats.map(f=>`<li>${f}</li>`).join('')}</ul>
-      <button class="pc-btn ${p.feat?'pc-btn-f':'pc-btn-o'}" onclick="goBook('${p.name}','${p.raw}',${p.months})">
+      <div class="pc-months">
+        ${p.duration}-month programme · Monthly payment
+      </div>
+      <ul class="pc-list">
+        ${p.features.map(f => `<li>${f}</li>`).join('')}
+      </ul>
+      <button 
+        class="pc-btn ${p.featured ? 'pc-btn-f' : 'pc-btn-o'}"
+        onclick="goBook('${p.name}', ${p.raw}, ${p.duration})"
+      >
         Select ${p.name} Plan →
       </button>
-    </div>`).join('');
+
+    </div>
+  `).join('');
 }
 function renderTests(id,n){
   const el=document.getElementById(id);if(!el)return;
