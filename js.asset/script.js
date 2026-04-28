@@ -19,7 +19,7 @@ const PF={
   Premium:['Full blood panel','Lifestyle analysis + body composition scan','Action plan','Meal plan','2× weight loss drips / month','2× GLP-1 injections / month','Follow up'],
   Executive:['Full blood panel','Lifestyle analysis + body composition scan','Meal plan','Gene-testing','Fully tailored GLP-1 programme','Follow up'],
   Consultation:['30-minute consultation','Medical assessment','Prescription if required','Referral if needed'],
-  Important:['Medication is prescribed only when clinically appropriate after assessment', 'Programmes are designed to support sustainable progress, not quick fixes', 'Results vary between individuals depending on medical factors, adherence, lifestyle,and response to treatment.', 'Supplements and treatment recommendations are tailored to the individual package and clinical need'],
+  Important:['Medication is prescribed only when clinically appropriate after assessment', 'Programmes are designed to support sustainable progress, not quick fixes', 'Results vary between individuals depending on medical factors, adherence, lifestyle,and response to treatment.', 'Supplements and treatment recommendations are tailored to the individual package and clinical need']
 };
 let curPlan={name:'Budget',amount:'1500',months:'6'};
 
