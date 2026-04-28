@@ -1,9 +1,9 @@
 const PLANS=[
-  {name:'Budget',price:'3,500',raw:3500,weeks:8,feat:false,
+  {name:'Budget',price:'1,500',raw:1500,perMonth:6,feat:false,
    feats:['Full blood panel','Lifestyle analysis + body composition scan','Action plan','Meal plan','Workout plan','Follow up x 2' ]},
-  {name:'Premium',price:'8,000',raw:8000,weeks:8,feat:true,badge:'Most Popular',
+  {name:'Premium',price:'3,500',raw:3500,perMonth:6,feat:true,badge:'Most Popular',
    feats:['Full blood panel','Lifestyle analysis + body composition scan','Action plan','Meal plan','2× weight loss drips / month','2× GLP-1 injections / month','Follow up']},
-  {name:'Executive',price:'15,000',raw:10000,weeks:12,feat:false,
+  {name:'Executive',price:'10,000',raw:10000,perMonth:6,feat:false,
    feats:['Full blood panel','Lifestyle analysis + body composition scan','Meal plan','Gene-testing','Fully tailored GLP-1 programme','Follow up']}
 ];
 const TESTS=[
@@ -18,9 +18,10 @@ const PF={
   Budget:['Full blood panel','Lifestyle analysis + body composition scan','Action plan','Meal plan','Workout plan','Follow up x 2'],
   Premium:['Full blood panel','Lifestyle analysis + body composition scan','Action plan','Meal plan','2× weight loss drips / month','2× GLP-1 injections / month','Follow up'],
   Executive:['Full blood panel','Lifestyle analysis + body composition scan','Meal plan','Gene-testing','Fully tailored GLP-1 programme','Follow up'],
-  Consultation:['30-minute consultation','Medical assessment','Prescription if required','Referral if needed']
+  Consultation:['30-minute consultation','Medical assessment','Prescription if required','Referral if needed'],
+  Important:['Medication is prescribed only when clinically appropriate after assessment', 'Programmes are designed to support sustainable progress, not quick fixes', 'Results vary between individuals depending on medical factors, adherence, lifestyle,and response to treatment.', 'Supplements and treatment recommendations are tailored to the individual package and clinical need'],
 };
-let curPlan={name:'Budget',amount:'3500',weeks:'8'};
+let curPlan={name:'Budget',amount:'1500',months:'6'};
 
 /* ─── RENDER ─── */
 function renderPricing(id){
@@ -30,9 +31,9 @@ function renderPricing(id){
       ${p.badge?`<div class="pc-ribbon">${p.badge}</div>`:''}
       <div class="pc-tier">${p.name} Plan</div>
       <div class="pc-price"><sup>R</sup>${p.price}</div>
-      <div class="pc-weeks">${p.weeks}-Week Programme · Once-off Payment</div>
+      <div class="pc-months">${p.months}-months Programme · Per month Payment</div>
       <ul class="pc-list">${p.feats.map(f=>`<li>${f}</li>`).join('')}</ul>
-      <button class="pc-btn ${p.feat?'pc-btn-f':'pc-btn-o'}" onclick="goBook('${p.name}','${p.raw}',${p.weeks})">
+      <button class="pc-btn ${p.feat?'pc-btn-f':'pc-btn-o'}" onclick="goBook('${p.name}','${p.raw}',${p.months})">
         Select ${p.name} Plan →
       </button>
     </div>`).join('');
@@ -50,13 +51,13 @@ function renderTests(id,n){
       </div>
     </div>`).join('');
 }
-function goBook(name,amt,wks){
+function goBook(name,amt,pmth){
   showPage('booking');
   document.querySelectorAll('.plan-pills .plan-pill').forEach(el=>{
     const label=el.querySelector('.pp-name');
     if(label) el.classList.toggle('sel',label.textContent===name);
   });
-  inbookUpdatePlan(name,String(amt),wks);
+  inbookUpdatePlan(name,String(amt),p/mth);
 }
 
 /* ─── NAVIGATION ─── */
@@ -203,4 +204,4 @@ renderPricing('services-pricing');
 renderTests('home-testimonials',3);
 renderTests('all-testimonials');
 renderCal();
-inbookUpdatePlan('Budget','3500',8);
+inbookUpdatePlan('Budget','1500',6);
