@@ -44,7 +44,7 @@ function renderPricing(id) {
       <div class="pc-tier">${p.name} Plan</div>  
       <div class="pc-price"><sup>R</sup>${p.price}</div>
       <div class="pc-months">
-        ${p.duration}-month programme · Monthly payment
+        ${p.duration} · Monthly payment
       </div>
       <ul class="pc-list">
         ${p.features.map(f => `<li>${f}</li>`).join('')}
@@ -142,15 +142,15 @@ function pickTime(el,t){
 }
 
 /* ─── PAYMENT ─── */
-function inbookPickPlan(el,name,amt,wks){
+function inbookPickPlan(el,name,amt,months){
   el.closest('.plan-pills').querySelectorAll('.plan-pill').forEach(e=>e.classList.remove('sel'));
   el.classList.add('sel');
-  inbookUpdatePlan(name,amt,wks);
+  inbookUpdatePlan(name,amt,months);
 }
-function inbookUpdatePlan(name,amt,wks){
+function inbookUpdatePlan(name,amt,month){
   const raw=parseInt(amt);
   const fmt=raw.toLocaleString();
-  curPlan={name,amount:String(raw),weeks:wks};
+  curPlan={name,amount: String(raw),months: months};
 
   const sp=document.getElementById('sum-plan');
   if(sp)sp.textContent=name+' Plan';

@@ -117,10 +117,10 @@
         <p>Select your plan and complete payment securely below.</p>
         <!-- Plan pills -->
         <div class="plan-pills">
-          <div class="plan-pill sel" onclick="inbookPickPlan(this,'Budget','3500',8)"><div class="pp-icon">💚</div><div class="pp-name">Budget</div><div class="pp-price">R3,500</div><div style="font-size:10px;color:var(--muted);">8 weeks</div></div>
-          <div class="plan-pill" onclick="inbookPickPlan(this,'Premium','8000',8)"><div class="pp-icon">⭐</div><div class="pp-name">Premium</div><div class="pp-price">R8,000</div><div style="font-size:10px;color:var(--muted);">8 weeks</div></div>
-          <div class="plan-pill" onclick="inbookPickPlan(this,'Executive','15000',12)"><div class="pp-icon">👑</div><div class="pp-name">Executive</div><div class="pp-price">R15,000</div><div style="font-size:10px;color:var(--muted);">12 weeks</div></div>
-          <div class="plan-pill" onclick="inbookPickPlan(this,'Consultation','500',1)"><div class="pp-icon">🩺</div><div class="pp-name">Consult</div><div class="pp-price">R500</div><div style="font-size:10px;color:var(--muted);">Once-off</div></div>
+          <div class="plan-pill sel" onclick="inbookPickPlan(this,'Budget','1500',6)"><div class="pp-icon">💚</div><div class="pp-name">Budget</div><div class="pp-price">R1,500</div><div style="font-size:10px;color:var(--muted);">6 months</div></div>
+          <div class="plan-pill" onclick="inbookPickPlan(this,'Premium','3500',6)"><div class="pp-icon">⭐</div><div class="pp-name">Premium</div><div class="pp-price">R3,500</div><div style="font-size:10px;color:var(--muted);">6 months</div></div>
+          <div class="plan-pill" onclick="inbookPickPlan(this,'Executive','10000',6)"><div class="pp-icon">👑</div><div class="pp-name">Executive</div><div class="pp-price">R15,000</div><div style="font-size:10px;color:var(--muted);">6 months</div></div>
+          <div class="plan-pill" onclick="inbookPickPlan(this,'Consultation','500',1)"><div class="pp-icon">🩺</div><div class="pp-name">Consultation</div><div class="pp-price">R500</div><div style="font-size:10px;color:var(--muted);">Once-off</div></div>
         </div>
         <!-- Includes -->
         <div class="inc-box"><div class="inc-box-title">✅ Included — <span id="ib-plan-name">Budget Plan</span></div><ul id="ib-inc-list" style="padding:0;margin:0;"></ul></div>
@@ -141,7 +141,7 @@
           <div class="pfi"><label>Card Number</label><input type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="ibFmtCard(this)"></div>
           <div class="pfr"><div class="pfi"><label>Expiry</label><input type="text" placeholder="MM / YY" maxlength="7" oninput="ibFmtExp(this)"></div><div class="pfi"><label>CVV</label><input type="text" placeholder="•••" maxlength="4"></div></div>
           <div class="secure-badge">🔒 <span>256-bit SSL encryption. Card details are never stored.</span></div>
-          <button class="pay-submit" onclick="doBookingAndPay('card')">🔒 Confirm &amp; Pay <span id="ib-btn-amt">R3,500</span></button>
+          <button class="pay-submit" onclick="doBookingAndPay('card')">🔒 Confirm &amp; Pay <span id="ib-btn-amt">R1,500</span></button>
         </div>
         <!-- EFT -->
         <div id="ib-eft-sec" style="display:none;">
