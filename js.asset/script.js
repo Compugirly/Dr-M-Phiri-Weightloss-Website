@@ -128,6 +128,27 @@ function pickDate(el,d){
   if(sd)sd.textContent=`${d} ${mn[calM]} ${calY}`;
 }
 
+/*Images*/
+
+ function openLb(card) {
+    const img = card.querySelector('img');
+    const title = card.querySelector('.title').textContent;
+    const sub = card.querySelector('.sub').textContent;
+    document.getElementById('lb-img').src = img.src;
+    document.getElementById('lb-img').alt = img.alt;
+    document.getElementById('lb-title').textContent = title;
+    document.getElementById('lb-sub').textContent = sub;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLb(e) {
+    if (!e || e.target === document.getElementById('lightbox') || e.target === document.getElementById('lightbox-close')) {
+      document.getElementById('lightbox').classList.remove('open');
+    }
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
+  });
+
 
 /* ─── BOOKING ─── */
 function selectAtype(el,type){
