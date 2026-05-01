@@ -1,0 +1,12 @@
+{
+  "name": "dr-m-phiri-weightloss-website",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "playwright test",
+    "validate": "html-validate index.html about.html services.html review.html booking.html contact.html"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0",
+    "html-validate": "^9.0.0"
+  }
+}
