@@ -31,7 +31,7 @@ const PF={
   Consultation:['30-minute consultation','Medical assessment','Prescription if required','Referral if needed'],
   Important:['Medication is prescribed only when clinically appropriate after assessment', 'Programmes are designed to support sustainable progress, not quick fixes', 'Results vary between individuals depending on medical factors, adherence, lifestyle,and response to treatment.', 'Supplements and treatment recommendations are tailored to the individual package and clinical need']
 };
-let curPlan={name:'Budget',amount:'1500',months:'6'};
+let curPlan={name:'Budget',amount:'1500',months: 1 };
 
 /* ─── RENDER ─── */
 function renderPricing(id) {
@@ -151,7 +151,6 @@ function pickDate(el,d){
 
 
 /* ─── BOOKING ─── */
-let curPlan = { name: 'Budget', amount: '1500', months: 1 };
 function selectAtype(el,type){
   el.closest('.atypes').querySelectorAll('.atype').forEach(e=>e.classList.remove('sel'));
   el.classList.add('sel');
