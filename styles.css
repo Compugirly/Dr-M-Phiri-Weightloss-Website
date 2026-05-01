@@ -957,7 +957,7 @@ footer p{font-size:11px;color:rgba(255,255,255,.25);}
 }
 
 /* ══════════════════════════════════════
-   RESPONSIVE — VERY SMALL PHONE (≤380px)
+   RESPONSIVE — VERY SMALL PHONE 
 ══════════════════════════════════════ */
 @media(max-width:380px){
   .hero-h1{font-size:2rem;}
@@ -966,5 +966,87 @@ footer p{font-size:11px;color:rgba(255,255,255,.25);}
   .stat-num{font-size:1.9rem;}
   .ptab{min-width:100%;}
   .plan-pill{flex-direction:column;align-items:flex-start;}
+}
+
+/* ─── MOBILE FIXES ─── */
+@media (max-width: 768px) {
+
+  /* ── ABOUT ── */
+  .about-hero,
+  .about-grid,
+  .about-split,
+  .about-layout,
+  .about-cols {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+
+  .about-hero-left,
+  .about-hero-right,
+  .about-left,
+  .about-right {
+    width: 100% !important;
+    min-width: unset !important;
+    max-width: 100% !important;
+  }
+
+  /* ── CONTACT ── */
+  .contact-grid,
+  .contact-layout,
+  .contact-cols,
+  .contact-split {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+
+  .contact-details,
+  .contact-form,
+  .contact-left,
+  .contact-right {
+    width: 100% !important;
+    min-width: unset !important;
+    max-width: 100% !important;
+  }
+
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* ── BOOKING ── */
+  .book-layout,
+  .book-grid,
+  .book-cols,
+  .book-split {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+
+  .book-main,
+  .book-sidebar {
+    width: 100% !important;
+    min-width: unset !important;
+    max-width: 100% !important;
+  }
+
+  .book-sidebar {
+    order: -1 !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .sum-card {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .book-confirm-btn {
+    width: 100% !important;
+  }
+
 }
  
