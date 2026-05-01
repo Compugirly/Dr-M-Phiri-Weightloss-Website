@@ -151,96 +151,148 @@ function pickDate(el,d){
 
 
 /* ─── BOOKING ─── */
-
 let curPlan = { name: 'Budget', amount: '1500', months: 1 };
-
-/* ─── APPOINTMENT TYPE ─── */
-function selectAtype(el, type) {
-  el.closest('.atypes').querySelectorAll('.atype').forEach(e => e.classList.remove('sel'));
+function selectAtype(el,type){
+  el.closest('.atypes').querySelectorAll('.atype').forEach(e=>e.classList.remove('sel'));
   el.classList.add('sel');
-  const s = document.getElementById('sum-type');
-  if (s) s.textContent = type;
+  const s=document.getElementById('sum-type');if(s)s.textContent=type;
 }
-
-/* ─── TIME SLOT ─── */
-function pickTime(el, t) {
-  document.querySelectorAll('.tslot').forEach(e => e.classList.remove('sel'));
+function pickTime(el,t){
+  document.querySelectorAll('.tslot').forEach(e=>e.classList.remove('sel'));
   el.classList.add('sel');
-  const s = document.getElementById('sum-time');
-  if (s) s.textContent = t;
+  const s=document.getElementById('sum-time');if(s)s.textContent=t;
 }
 
-/* ─── PLAN SELECTION ─── */
-function inbookPickPlan(el, name, amt, months) {
-  el.closest('.plan-pills').querySelectorAll('.plan-pill').forEach(e => e.classList.remove('sel'));
+/* ─── PAYMENT ─── */
+function inbookPickPlan(el,name,amt,months){
+  el.closest('.plan-pills').querySelectorAll('.plan-pill').forEach(e=>e.classList.remove('sel'));
   el.classList.add('sel');
-  inbookUpdatePlan(name, amt, months);
+  inbookUpdatePlan(name,amt,months);
 }
+function inbookUpdatePlan(name,amt,months){
+  const raw=parseInt(amt);
+  const fmt=raw.toLocaleString();
+  curPlan={name,amount: String(raw),months: months};
 
-function inbookUpdatePlan(name, amt, months) {
-  const raw = parseInt(amt);
-  const fmt = raw.toLocaleString();
-  curPlan = { name, amount: String(raw), months: months };
+  const sp=document.getElementById('sum-plan');
+  if(sp)sp.textContent=name+' Plan';
 
-  const sp = document.getElementById('sum-plan');
-  if (sp) sp.textContent = name + ' Plan';
+  const st=document.getElementById('sum-total-amt');
+  if(st)st.textContent='R'+fmt;
 
-  const st = document.getElementById('sum-total-amt');
-  if (st) st.textContent = 'R' + fmt;
+  const pn=document.getElementById('ib-plan-name');
+  if(pn)pn.textContent=name+' Plan';
 
-  const pn = document.getElementById('ib-plan-name');
-  if (pn) pn.textContent = name + ' Plan';
+  const ba=document.getElementById('ib-btn-amt');
+  if(ba)ba.textContent='R'+fmt;
 
-  const ba = document.getElementById('ib-btn-amt');
-  if (ba) ba.textContent = 'R' + fmt;
-
-  const il = document.getElementById('ib-inc-list');
-  const fs = PF[name] || PF.Budget;
-  if (il) il.innerHTML = fs.map(f => `<li>${f}</li>`).join('');
+  const il=document.getElementById('ib-inc-list');
+  const fs=PF[name]||PF.Budget;
+  if(il)il.innerHTML=fs.map(f=>`<li>${f}</li>`).join('');
 }
-
-/* ─── PAYMENT METHOD ─── */
-function ibPickMethod(el, m) {
-  el.closest('.ptabs').querySelectorAll('.ptab').forEach(t => t.classList.remove('sel'));
+function ibPickMethod(el,m){
+  el.closest('.ptabs').querySelectorAll('.ptab').forEach(t=>t.classList.remove('sel'));
   el.classList.add('sel');
-  document.getElementById('ib-card-sec').style.display = m === 'card' ? 'block' : 'none';
-  document.getElementById('ib-eft-sec').style.display = m === 'eft' ? 'block' : 'none';
-  document.getElementById('ib-ss-sec').style.display = m === 'snapscan' ? 'block' : 'none';
+  document.getElementById('ib-card-sec').style.display=m==='card'?'block':'none';
+  document.getElementById('ib-eft-sec').style.display=m==='eft'?'block':'none';
+  document.getElementById('ib-ss-sec').style.display=m==='snapscan'?'block':'none';
+}
+function ibFmtCard(inp){
+  let v=inp.value.replace(/\D/g,''),o='';
+  for(let i=0;i<v.length&&i<16;i++){if(i&&i%4===0)o+=' ';o+=v[i];}
+  inp.value=o;
+  const d=document.getElementById('ib-d-num');if(d)d.textContent=o||'•••• •••• •••• ••••';
+}
+function ibFmtExp(inp){
+  let v=inp.value.replace(/\D/g,'');
+  if(v.length>=2)v=v.slice(0,2)+' / '+v.slice(2,4);
+  inp.value=v;
+  const d=document.getElementById('ib-d-exp');if(d)d.textContent=inp.value||'MM / YY';
+}
+function doBookingAndPay(method){
+  const fn=document.getElementById('b-fname');
+  const sd=document.getElementById('sum-date');
+  const st=document.getElementById('sum-time');
+  if(!fn||!fn.value.trim()){alert('Please fill in your name in Step 1.');return;}
+  if(!sd||sd.textContent==='Select a date'){alert('Please select a date.');return;}
+  if(!st||st.textContent==='Select a time'){alert('Please select a time slot.');return;}
+  const fmt=parseInt(curPlan.amount).toLocaleString();
+  if(method==='eft')showSuccess(`Booking Confirmed!\nDate: ${sd.textContent} at ${st.textContent} · ${curPlan.name} Plan (R${fmt}). EFT banking details have been emailed to you.`);
+  else if(method==='snapscan')showSuccess(`Booking Confirmed!\nDate: ${sd.textContent} at ${st.textContent} · ${curPlan.name} Plan (R${fmt}). Thank you, ${fn.value}!`);
+  else showSuccess(`Booking Confirmed + Payment Successful!\nDate: ${sd.textContent} at ${st.textContent} · ${curPlan.name} Plan (R${fmt}). See you then, ${fn.value}!`);
+}
+function selectAtype(el,type){
+  el.closest('.atypes').querySelectorAll('.atype').forEach(e=>e.classList.remove('sel'));
+  el.classList.add('sel');
+  const s=document.getElementById('sum-type');if(s)s.textContent=type;
+}
+function pickTime(el,t){
+  document.querySelectorAll('.tslot').forEach(e=>e.classList.remove('sel'));
+  el.classList.add('sel');
+  const s=document.getElementById('sum-time');if(s)s.textContent=t;
 }
 
-/* ─── CARD FORMATTING ─── */
-function ibFmtCard(inp) {
-  let v = inp.value.replace(/\D/g, ''), o = '';
-  for (let i = 0; i < v.length && i < 16; i++) { if (i && i % 4 === 0) o += ' '; o += v[i]; }
-  inp.value = o;
-  const d = document.getElementById('ib-d-num');
-  if (d) d.textContent = o || '•••• •••• •••• ••••';
+/* ─── PAYMENT ─── */
+
+function inbookPickPlan(el,name,amt,months){
+  el.closest('.plan-pills').querySelectorAll('.plan-pill').forEach(e=>e.classList.remove('sel'));
+  el.classList.add('sel');
+  inbookUpdatePlan(name,amt,months);
+}
+function inbookUpdatePlan(name,amt,month){
+  const raw=parseInt(amt);
+  const fmt=raw.toLocaleString();
+  curPlan={name,amount: String(raw),months: months};
+
+  const sp=document.getElementById('sum-plan');
+  if(sp)sp.textContent=name+' Plan';
+
+  const st=document.getElementById('sum-total-amt');
+  if(st)st.textContent='R'+fmt;
+
+  const pn=document.getElementById('ib-plan-name');
+  if(pn)pn.textContent=name+' Plan';
+
+  const ba=document.getElementById('ib-btn-amt');
+  if(ba)ba.textContent='R'+fmt;
+
+  const il=document.getElementById('ib-inc-list');
+  const fs=PF[name]||PF.Budget;
+  if(il)il.innerHTML=fs.map(f=>`<li>${f}</li>`).join('');
+}
+function ibPickMethod(el,m){
+  el.closest('.ptabs').querySelectorAll('.ptab').forEach(t=>t.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('ib-card-sec').style.display=m==='card'?'block':'none';
+  document.getElementById('ib-eft-sec').style.display=m==='eft'?'block':'none';
+  document.getElementById('ib-ss-sec').style.display=m==='snapscan'?'block':'none';
+}
+function ibFmtCard(inp){
+  let v=inp.value.replace(/\D/g,''),o='';
+  for(let i=0;i<v.length&&i<16;i++){if(i&&i%4===0)o+=' ';o+=v[i];}
+  inp.value=o;
+  const d=document.getElementById('ib-d-num');if(d)d.textContent=o||'•••• •••• •••• ••••';
+}
+function ibFmtExp(inp){
+  let v=inp.value.replace(/\D/g,'');
+  if(v.length>=2)v=v.slice(0,2)+' / '+v.slice(2,4);
+  inp.value=v;
+  const d=document.getElementById('ib-d-exp');if(d)d.textContent=inp.value||'MM / YY';
+}
+function doBookingAndPay(method){
+  const fn=document.getElementById('b-fname');
+  const sd=document.getElementById('sum-date');
+  const st=document.getElementById('sum-time');
+  if(!fn||!fn.value.trim()){alert('Please fill in your name in Step 1.');return;}
+  if(!sd||sd.textContent==='Select a date'){alert('Please select a date.');return;}
+  if(!st||st.textContent==='Select a time'){alert('Please select a time slot.');return;}
+  const fmt=parseInt(curPlan.amount).toLocaleString();
+  if(method==='eft')showSuccess(`Booking Confirmed!\nDate: ${sd.textContent} at ${st.textContent} · ${curPlan.name} Plan (R${fmt}). EFT banking details have been emailed to you.`);
+  else if(method==='snapscan')showSuccess(`Booking Confirmed!\nDate: ${sd.textContent} at ${st.textContent} · ${curPlan.name} Plan (R${fmt}). Thank you, ${fn.value}!`);
+  else showSuccess(`Booking Confirmed + Payment Successful!\nDate: ${sd.textContent} at ${st.textContent} · ${curPlan.name} Plan (R${fmt}). See you then, ${fn.value}!`);
 }
 
-function ibFmtExp(inp) {
-  let v = inp.value.replace(/\D/g, '');
-  if (v.length >= 2) v = v.slice(0, 2) + ' / ' + v.slice(2, 4);
-  inp.value = v;
-  const d = document.getElementById('ib-d-exp');
-  if (d) d.textContent = inp.value || 'MM / YY';
-}
 
-/* ─── CONFIRM BOOKING ─── */
-function doBookingAndPay(method) {
-  const fn = document.getElementById('b-fname');
-  const sd = document.getElementById('sum-date');
-  const st = document.getElementById('sum-time');
-  if (!fn || !fn.value.trim()) { alert('Please fill in your name in Step 1.'); return; }
-  if (!sd || sd.textContent === 'Select a date') { alert('Please select a date.'); return; }
-  if (!st || st.textContent === 'Select a time') { alert('Please select a time slot.'); return; }
-  const fmt = parseInt(curPlan.amount).toLocaleString();
-  if (method === 'eft')
-    showSuccess(`Booking Confirmed!\nDate: ${sd.textContent} at ${st.textContent} · ${curPlan.name} Plan (R${fmt}). EFT banking details have been emailed to you.`);
-  else if (method === 'snapscan')
-    showSuccess(`Booking Confirmed!\nDate: ${sd.textContent} at ${st.textContent} · ${curPlan.name} Plan (R${fmt}). Thank you, ${fn.value}!`);
-  else
-    showSuccess(`Booking Confirmed + Payment Successful!\nDate: ${sd.textContent} at ${st.textContent} · ${curPlan.name} Plan (R${fmt}). See you then, ${fn.value}!`);
-}
 
 /* ─── CONTACT ─── */
 function handleContact(){
