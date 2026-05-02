@@ -1,21 +1,21 @@
 const PLANS = [
   {
-    name: "Budget", price: "1,500", raw: 1500, duration: 6, featured: false,
-    features: ["Full blood panel", "Lifestyle analysis + body composition scan", "Action plan", "Meal plan", "Workout plan", "Follow up x2"]
+    name: "Foundation", price: "1,500", raw: 1500, duration: 6, featured: false,
+    features: ["Full blood panel", "In-depth lifestyle and medical assessment", "Personalised action plan", "Nutrition guidance", "Workout plan", "Monthly Follow up ", "Medical weight los support if clinically"]
   },
   {
     name: "Premium", price: "3,500", raw: 3500, duration: 6, featured: true, badge: "Most Popular",
-    features: ["Full blood panel", "Lifestyle analysis + body composition scan", "Action plan", "Meal plan", "2× weight loss drips / month", "2× GLP-1 injections / month", "Follow up"]
+    features: ["Everything in Foundation", "Body Composition Scan", "Grocery Guide", "Personalised Meal plan", "Supplement Guide", "More tailored progress support"]
   },
   {
     name: "Executive", price: "10,000", raw: 10000, duration: 6, featured: false,
-    features: ["Full blood panel", "Lifestyle analysis + body composition scan", "Meal plan", "Gene-testing", "Fully tailored GLP-1 programme", "Follow up"]
+    features: ["Everything in Premium", "Dietician support", "Full doctor-led medical weight loss programme", "Gene-testing", "Monthly supplement allocation", "Premium Follow up support"]
   }
 ];
 
 const TESTS = [
   {name:'Nomsa K.',sub:'Lost 18kg · Premium Plan',bg:'#2D6A4F',s:5,t:"Dr Phiri completely changed how I think about weight loss. He found out I had insulin resistance — something no one had checked before. Lost 18kg in 3 months."},
-  {name:'Priya M.',sub:'Lost 12kg · Budget Plan',bg:'#C9A84C',s:5,t:"I've tried every diet. Dr Phiri's approach is different — it's medical. He addresses the actual reason you gain weight. Not just telling you to eat less. Incredible."},
+  {name:'Priya M.',sub:'Lost 12kg · Foundation Plan',bg:'#C9A84C',s:5,t:"I've tried every diet. Dr Phiri's approach is different — it's medical. He addresses the actual reason you gain weight. Not just telling you to eat less. Incredible."},
   {name:'Thabo D.',sub:'Lost 22kg · Executive Plan',bg:'#1B4332',s:5,t:"Worth every rand. Gene testing revealed a genetic obesity marker. With the tailored GLP-1 programme I've lost 22kg and feel better than I have in 15 years."},
   {name:'Liezel V.',sub:'PCOS Weight Loss',bg:'#40916C',s:5,t:"PCOS made weight loss impossible for me. Dr Phiri treated my hormones first. The weight started dropping naturally. I'm genuinely emotional about my progress."},
   {name:'Craig S.',sub:'Virtual · Cape Town',bg:'#2D6A4F',s:5,t:"I'm in Cape Town and did everything virtually. Seamless — blood tests at a local lab, all consults on video. Dr Phiri is thorough, kind, and professional."},
@@ -23,14 +23,14 @@ const TESTS = [
 ];
 
 const PF = {
-  Budget: ['Full blood panel','Lifestyle analysis + body composition scan','Action plan','Meal plan','Workout plan','Follow up x 2'],
-  Premium: ['Full blood panel','Lifestyle analysis + body composition scan','Action plan','Meal plan','2× weight loss drips / month','2× GLP-1 injections / month','Follow up'],
-  Executive: ['Full blood panel','Lifestyle analysis + body composition scan','Meal plan','Gene-testing','Fully tailored GLP-1 programme','Follow up'],
+  Foundation: ["Full blood panel", "In-depth lifestyle and medical assessment", "Personalised action plan", "Nutrition guidance", "Workout plan", "Monthly Follow up ", "Medical weight los support if clinically"],
+  Premium: ["Everything in Foundation", "Body Composition Scan", "Grocery Guide", "Personalised Meal plan", "Supplement Guide", "More tailored progress support"],
+  Executive: ["Everything in Premium", "Dietician support", "Full doctor-led medical weight loss programme", "Gene-testing", "Monthly supplement allocation", "Premium Follow up support"],
   Consultation: ['30-minute consultation','Medical assessment','Prescription if required','Referral if needed'],
   Important: ['Medication is prescribed only when clinically appropriate after assessment','Programmes are designed to support sustainable progress, not quick fixes','Results vary between individuals depending on medical factors, adherence, lifestyle, and response to treatment.','Supplements and treatment recommendations are tailored to the individual package and clinical need']
 };
 
-let curPlan = { name: 'Budget', amount: '1500', months: 6 };
+let curPlan = { name: 'Foundation', amount: '1500', months: 6 };
 
 /* ─── RENDER ─── */
 function renderPricing(id) {
