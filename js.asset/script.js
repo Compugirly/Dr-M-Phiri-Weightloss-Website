@@ -41,7 +41,7 @@ function renderPricing(id) {
       ${p.badge ? `<div class="pc-ribbon">${p.badge}</div>` : ''}
       <div class="pc-tier">${p.name} Plan</div>
       <div class="pc-price"><sup>R</sup>${p.price}</div>
-      <div class="pc-months">${p.duration} · Monthly payment</div>
+      <div class="pc-months">${p.duration} · Monthly payments</div>
       <ul class="pc-list">${p.features.map(f => `<li>${f}</li>`).join('')}</ul>
       <button class="pc-btn ${p.featured ? 'pc-btn-f' : 'pc-btn-o'}" onclick="goBook('${p.name}', ${p.raw}, ${p.duration})">
         Select ${p.name} Plan →
@@ -259,4 +259,4 @@ renderPricing('services-pricing');
 renderTests('home-testimonials', 3);
 renderTests('all-testimonials');
 renderCal();
-inbookUpdatePlan('Budget', '1500', 6);
+inbookUpdatePlan('Foundation', '1500', 6);
