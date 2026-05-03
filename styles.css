@@ -1570,7 +1570,6 @@ nav{
 }
 .plan-pill.sel{border-color:var(--forest);background:var(--mint-pale);}
 .plan-pill:hover:not(.sel){border-color:var(--forest-lt);}
-.pp-icon{font-size:1.6rem;margin-bottom:3px;}
 .pp-name{font-size:12px;font-weight:700;color:var(--charcoal);}
 .pp-price{font-family:var(--display);font-size:1.1rem;color:var(--forest);font-weight:700;}
 
