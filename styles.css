@@ -1571,7 +1571,7 @@ nav{
 .plan-pill.sel{border-color:var(--forest);background:var(--mint-pale);}
 .plan-pill:hover:not(.sel){border-color:var(--forest-lt);}
 .pp-name{font-size:14px;font-weight:800;color:var(--charcoal);}
-.pp-price{font-family:var(--display);font-size:1.1rem;color:var(--forest);font-weight:700;}
+.pp-price{font-family:var(--display);font-size:1.1rem;color:var(--forest);font-weight:800;}
 
 /* Success overlay */
 .suc-ov{
