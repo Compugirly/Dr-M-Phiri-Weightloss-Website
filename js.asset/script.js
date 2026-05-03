@@ -66,7 +66,10 @@ function renderTests(id, n) {
 }
 
 function goBook(name, amt, pmth) {
+   localStorage.setItem('selectedPlan', JSON.stringify({name:name, amt:amt, pmth:pmth}));
+   window.location.href="booking.html";
   showPage('booking');
+  renderCal();
   document.querySelectorAll('.plan-pills .plan-pill').forEach(el => {
     const label = el.querySelector('.pp-name');
     if (label) el.classList.toggle('sel', label.textContent === name);
@@ -191,6 +194,7 @@ function inbookUpdatePlan(name, amt, months) {
   const il = document.getElementById('ib-inc-list');
   const fs = PF[name] || PF.Budget;
   if (il) il.innerHTML = fs.map(f => `<li>${f}</li>`).join('');
+  
 }
 
 function ibPickMethod(el, m) {
