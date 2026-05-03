@@ -135,11 +135,18 @@ function openLb(card) {
   const img = card.querySelector('img');
   const title = card.querySelector('.title').textContent;
   const sub = card.querySelector('.sub').textContent;
+
   document.getElementById('lb-img').src = img.src;
   document.getElementById('lb-img').alt = img.alt;
   document.getElementById('lb-title').textContent = title;
   document.getElementById('lb-sub').textContent = sub;
   document.getElementById('lightbox').classList.add('open');
+}
+
+function closeLb(e) {
+  if (!e || e.target !== document.getElementById('lb-img')) {
+    document.getElementById('lightbox').classList.remove('open');
+  }
 }
 
 function closeLb(e) {
@@ -194,7 +201,7 @@ function inbookUpdatePlan(name, amt, months) {
   const il = document.getElementById('ib-inc-list');
   const fs = PF[name] || PF.Budget;
   if (il) il.innerHTML = fs.map(f => `<li>${f}</li>`).join('');
-  
+
 }
 
 function ibPickMethod(el, m) {

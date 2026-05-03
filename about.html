@@ -192,10 +192,19 @@
     </div>
 
     <!-- bento photo grid — 2 tall + 2 medium + 1 wide -->
-   <div style="width:100%;padding:2rem 1.5rem;margin:0;box-sizing:border-box;"></div>
- <div class="collage-grid">
-   <div class="photo-card wide" onclick="openLb(this)">
-    <img src="images.asset/docSittingOnBrownSofa.jpg"  height=400 width="500" loading="eager" alt="Dr M Phiri">
+  <!-- Lightbox must be OUTSIDE the grid -->
+<div id="lightbox" onclick="closeLb(event)">
+  <button id="lightbox-close" onclick="closeLb()">&#215;</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption">
+    <div class="title" id="lb-title"></div>
+    <div class="sub" id="lb-sub"></div>
+  </div>
+</div>
+
+<div class="collage-grid">
+  <div class="photo-card wide" onclick="openLb(this)">
+    <img src="images.asset/docSittingOnBrownSofa.jpg" loading="eager" alt="Dr M Phiri">
     <div class="overlay"></div>
     <div class="caption">
       <div class="title">Dr M Phiri</div>
@@ -203,9 +212,8 @@
     </div>
   </div>
 
-  <div style="width:100%;padding:2rem 1.5rem;margin:0;box-sizing:border-box;"></div>
   <div class="photo-card" onclick="openLb(this)">
-    <img src="images.asset/docWorkingOnMacbook.jpg"  height=400 width="500" loading="eager" alt="The Practice">
+    <img src="images.asset/docWorkingOnMacbook.jpg" loading="eager" alt="The Practice">
     <div class="overlay"></div>
     <div class="caption">
       <div class="title">The Practice</div>
@@ -213,9 +221,8 @@
     </div>
   </div>
 
-  <div style="width:100%;padding:2rem 1.5rem;margin:0;box-sizing:border-box;"></div>
   <div class="photo-card" onclick="openLb(this)">
-    <img src="images.asset/docStandingOnNextToStairs.jpg"  height=400 width="500" loading="eager" alt="Your very own GP">
+    <img src="images.asset/docStandingOnNextToStairs.jpg" loading="eager" alt="Your very own GP">
     <div class="overlay"></div>
     <div class="caption">
       <div class="title">Your very own GP</div>
@@ -223,9 +230,8 @@
     </div>
   </div>
 
-  <div style="width:100%;padding:2rem 1.5rem;margin:0;box-sizing:border-box;"></div>
   <div class="photo-card" onclick="openLb(this)">
-    <img src="images.asset/docWriting.jpg"  height=400 width="500" loading="eager" alt="Patient Consultation">
+    <img src="images.asset/docWriting.jpg" loading="eager" alt="Patient Consultation">
     <div class="overlay"></div>
     <div class="caption">
       <div class="title">Patient Consultation</div>
@@ -233,22 +239,13 @@
     </div>
   </div>
 
- <div style="width:100%;padding:2rem 1.5rem;margin:0;box-sizing:border-box;"></div>
   <div class="photo-card wide" onclick="openLb(this)">
-    <img src="images.asset/consultatioRroom.jpg"  height=400 width="500" loading="eager" alt="Our Practice">
+    <img src="images.asset/consultatioRroom.jpg" loading="eager" alt="Our Practice">
     <div class="overlay"></div>
     <div class="caption">
       <div class="title">Our Practice</div>
       <div class="sub">Ballito, KwaZulu-Natal</div>
     </div>
- </div>
-
-<div id="lightbox" onclick="closeLb(event)">
-  <button id="lightbox-close" onclick="closeLb()">&#215;</button>
-  <img id="lb-img" src="" alt="">
-  <div class="lb-caption">
-    <div class="title" id="lb-title"></div>
-    <div class="sub" id="lb-sub"></div>
   </div>
 </div>
 </section>
