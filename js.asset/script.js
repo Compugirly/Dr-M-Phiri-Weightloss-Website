@@ -1,20 +1,23 @@
 const PLANS = [
   {
     name: "Foundation", price: "1,500", raw: 1500, duration: 6, featured: false,
-    features: ["Full blood panel", "In-depth lifestyle and medical assessment", "Personalised action plan", "Nutrition guidance", "Workout plan", "Monthly Follow up ", "Medical weight los support if clinically"]
+    features: ["Full blood panel", "In-depth lifestyle and medical assessment", "Personalised action plan", "Nutrition guidance", "Workout plan", "Monthly Follow up", "Medical weight loss support if clinically indicated"],
+    suitability: "Built for clients who want structure, medical guidance, and steady accountability. Who it is suitable for: Best for teachers, nurses, receptionists, administrators, retail managers, shift workers, and early-career professionals who want expert direction without a premium-level spend."
   },
   {
     name: "Premium", price: "3,500", raw: 3500, duration: 6, featured: true, badge: "Most Popular",
-    features: ["Everything in Foundation", "Body Composition Scan", "Grocery Guide", "Personalised Meal plan", "Supplement Guide", "More tailored progress support"]
+    features: ["Everything in Foundation", "Body Composition Scan", "Grocery Guide", "Personalised Meal plan", "Supplement Guide", "More tailored progress support"],
+    suitability: "More personalised support with stronger structure. Built for clients who want a tailored plan, better accountability, and easier day-to-day execution. Who is it suitable for: Best for managers, business owners, office professionals, sales representatives, consultants, and busy parents who need more support and customisation."
   },
   {
     name: "Executive", price: "10,000", raw: 10000, duration: 6, featured: false,
-    features: ["Everything in Premium", "Dietician support", "Full doctor-led medical weight loss programme", "Gene-testing", "Monthly supplement allocation", "Premium Follow up support"]
+    features: ["Everything in Premium", "Dietician support", "Full doctor-led medical weight loss programme", "Gene-testing", "Monthly supplement allocation", "Premium Follow up support"],
+    suitability: "Premium high-touch metabolic care. Built for clients who want the highest level of doctor-led support, convenience, and precision. Who it is suitable for: Best for executives, entrepreneurs, doctors, directors, and other high-performance professionals who want a premium service around a demanding schedule."
   }
 ];
 
 const TESTS = [
-  {name:'Nomsa K.',sub:'Lost 18kg · Premium Plan',bg:'#2D6A4F',s:5,t:"Dr Phiri completely changed how I think about weight loss. He found out I had insulin resistance — something no one had checked before. Lost 18kg in 3 months."},
+  {name:'Nomsa K.',sub:'Lost 18kg · Premium Plan',bg:'#2D6A4F',s:5,t:"Dr Phiri completely changed how I think about weight loss. He found out I had insulin resistance — something no one had checked before."},
   {name:'Priya M.',sub:'Lost 12kg · Foundation Plan',bg:'#C9A84C',s:5,t:"I've tried every diet. Dr Phiri's approach is different — it's medical. He addresses the actual reason you gain weight. Not just telling you to eat less. Incredible."},
   {name:'Thabo D.',sub:'Lost 22kg · Executive Plan',bg:'#1B4332',s:5,t:"Worth every rand. Gene testing revealed a genetic obesity marker. With the tailored GLP-1 programme I've lost 22kg and feel better than I have in 15 years."},
   {name:'Liezel V.',sub:'PCOS Weight Loss',bg:'#40916C',s:5,t:"PCOS made weight loss impossible for me. Dr Phiri treated my hormones first. The weight started dropping naturally. I'm genuinely emotional about my progress."},
@@ -23,7 +26,7 @@ const TESTS = [
 ];
 
 const PF = {
-  Foundation: ["Full blood panel", "In-depth lifestyle and medical assessment", "Personalised action plan", "Nutrition guidance", "Workout plan", "Monthly Follow up ", "Medical weight los support if clinically"],
+  Foundation: ["Full blood panel", "In-depth lifestyle and medical assessment", "Personalised action plan", "Nutrition guidance", "Workout plan", "Monthly Follow up", "Medical weight loss support if clinically indicated"],
   Premium: ["Everything in Foundation", "Body Composition Scan", "Grocery Guide", "Personalised Meal plan", "Supplement Guide", "More tailored progress support"],
   Executive: ["Everything in Premium", "Dietician support", "Full doctor-led medical weight loss programme", "Gene-testing", "Monthly supplement allocation", "Premium Follow up support"],
   Consultation: ['30-minute consultation','Medical assessment','Prescription if required','Referral if needed'],
@@ -32,7 +35,7 @@ const PF = {
 
 let curPlan = { name: 'Foundation', amount: '1500', months: 6 };
 
-/* ─── RENDER ─── */
+/* ─── RENDER PRICING CARDS ─── */
 function renderPricing(id) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -43,6 +46,20 @@ function renderPricing(id) {
       <div class="pc-price"><sup>R</sup>${p.price}</div>
       <div class="pc-months">${p.duration} · Monthly payments</div>
       <ul class="pc-list">${p.features.map(f => `<li>${f}</li>`).join('')}</ul>
+
+      ${p.suitability ? `
+      <div class="pc-suit-wrap">
+        <button class="pc-suit-toggle" onclick="toggleSuitability(this)" aria-expanded="false">
+          <span>Who is this for?</span>
+          <svg class="pc-suit-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 5L7 10L12 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="pc-suit-body">
+          <p>${p.suitability}</p>
+        </div>
+      </div>` : ''}
+
       <button class="pc-btn ${p.featured ? 'pc-btn-f' : 'pc-btn-o'}" onclick="goBook('${p.name}', ${p.raw}, ${p.duration})">
         Select ${p.name} Plan →
       </button>
@@ -50,6 +67,26 @@ function renderPricing(id) {
   `).join('');
 }
 
+/* ─── SUITABILITY TOGGLE ─── */
+function toggleSuitability(btn) {
+  const wrap = btn.closest('.pc-suit-wrap');
+  const body = wrap.querySelector('.pc-suit-body');
+  const isOpen = wrap.classList.contains('open');
+
+  if (isOpen) {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(() => { body.style.maxHeight = '0'; });
+    wrap.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  } else {
+    body.style.maxHeight = '0';
+    wrap.classList.add('open');
+    btn.setAttribute('aria-expanded', 'true');
+    requestAnimationFrame(() => { body.style.maxHeight = body.scrollHeight + 'px'; });
+  }
+}
+
+/* ─── RENDER TESTIMONIALS ─── */
 function renderTests(id, n) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -65,16 +102,10 @@ function renderTests(id, n) {
     </div>`).join('');
 }
 
+/* ─── GO TO BOOKING PAGE ─── */
 function goBook(name, amt, pmth) {
-   localStorage.setItem('selectedPlan', JSON.stringify({name:name, amt:amt, pmth:pmth}));
-   window.location.href="booking.html";
-  showPage('booking');
-  renderCal();
-  document.querySelectorAll('.plan-pills .plan-pill').forEach(el => {
-    const label = el.querySelector('.pp-name');
-    if (label) el.classList.toggle('sel', label.textContent === name);
-  });
-  inbookUpdatePlan(name, String(amt), pmth);
+  localStorage.setItem('selectedPlan', JSON.stringify({ name, amt, pmth }));
+  window.location.href = 'booking.html';
 }
 
 /* ─── NAVIGATION ─── */
@@ -130,23 +161,16 @@ function pickDate(el, d) {
   if (sd) sd.textContent = `${d} ${mn[calM]} ${calY}`;
 }
 
-/* ─── IMAGES ─── */
+/* ─── LIGHTBOX ─── */
 function openLb(card) {
   const img = card.querySelector('img');
   const title = card.querySelector('.title').textContent;
   const sub = card.querySelector('.sub').textContent;
-
   document.getElementById('lb-img').src = img.src;
   document.getElementById('lb-img').alt = img.alt;
   document.getElementById('lb-title').textContent = title;
   document.getElementById('lb-sub').textContent = sub;
   document.getElementById('lightbox').classList.add('open');
-}
-
-function closeLb(e) {
-  if (!e || e.target !== document.getElementById('lb-img')) {
-    document.getElementById('lightbox').classList.remove('open');
-  }
 }
 
 function closeLb(e) {
@@ -156,7 +180,10 @@ function closeLb(e) {
 }
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
+  if (e.key === 'Escape') {
+    const lb = document.getElementById('lightbox');
+    if (lb) lb.classList.remove('open');
+  }
 });
 
 /* ─── BOOKING ─── */
@@ -184,7 +211,7 @@ function inbookPickPlan(el, name, amt, months) {
 function inbookUpdatePlan(name, amt, months) {
   const raw = parseInt(amt);
   const fmt = raw.toLocaleString();
-  curPlan = { name, amount: String(raw), months: months };
+  curPlan = { name, amount: String(raw), months };
 
   const sp = document.getElementById('sum-plan');
   if (sp) sp.textContent = name + ' Plan';
@@ -199,9 +226,8 @@ function inbookUpdatePlan(name, amt, months) {
   if (ba) ba.textContent = 'R' + fmt;
 
   const il = document.getElementById('ib-inc-list');
-  const fs = PF[name] || PF.Budget;
+  const fs = PF[name] || PF.Foundation;
   if (il) il.innerHTML = fs.map(f => `<li>${f}</li>`).join('');
-
 }
 
 function ibPickMethod(el, m) {
@@ -270,4 +296,23 @@ renderPricing('services-pricing');
 renderTests('home-testimonials', 3);
 renderTests('all-testimonials');
 renderCal();
-inbookUpdatePlan('Foundation', '1500', 6);
+
+// Auto-select plan on booking.html when arriving from "Select Plan" button
+(function applyStoredPlan() {
+  const stored = localStorage.getItem('selectedPlan');
+  if (!stored) {
+    inbookUpdatePlan('Foundation', '1500', 6);
+    return;
+  }
+  try {
+    const { name, amt, pmth } = JSON.parse(stored);
+    document.querySelectorAll('.plan-pills .plan-pill').forEach(el => {
+      const label = el.querySelector('.pp-name');
+      if (label) el.classList.toggle('sel', label.textContent.trim() === name);
+    });
+    inbookUpdatePlan(name, String(amt), pmth);
+    localStorage.removeItem('selectedPlan');
+  } catch(e) {
+    inbookUpdatePlan('Foundation', '1500', 6);
+  }
+})();

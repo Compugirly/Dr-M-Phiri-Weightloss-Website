@@ -2097,3 +2097,53 @@ footer p{font-size:11px;color:rgba(255,255,255,.25);}
     padding:1.4rem!important;
   }
 }
+/* ── Paste this into your styles.css, inside your existing pricing card styles ── */
+
+/* "Who is this for?" toggle wrapper */
+.pc-suit-wrap {
+  margin: 0.9rem 0 0.75rem;
+  border-top: 1px solid rgba(0,0,0,0.07);
+  padding-top: 0.75rem;
+}
+
+/* Toggle button */
+.pc-suit-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--forest);
+  letter-spacing: 0.3px;
+  font-family: var(--body);
+  transition: opacity 0.15s;
+}
+.pc-suit-toggle:hover { opacity: 0.75; }
+
+/* Arrow icon — rotates when open */
+.pc-suit-arrow {
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+  color: var(--forest);
+}
+.pc-suit-wrap.open .pc-suit-arrow {
+  transform: rotate(180deg);
+}
+
+/* Collapsible body */
+.pc-suit-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.pc-suit-body p {
+  font-size: 12.5px;
+  color: var(--muted, #6b7280);
+  line-height: 1.7;
+  margin: 0.6rem 0 0;
+  padding: 0;
+}
