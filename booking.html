@@ -35,16 +35,41 @@
     <button class="mob-btn" onclick="toggleMobile()">☰</button>
   </div>
 </nav>
+
 <div class="page active" id="page-booking">
 
+  <!-- HERO -->
   <div style="background:var(--forest);padding:calc(var(--nav-h) + 2.5rem) var(--pad) 2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;">
     <div>
       <div class="eyebrow" style="color:var(--mint);">Book &amp; Pay Online</div>
       <h1 style="font-family:var(--display);font-size:2.8rem;font-weight:700;color:#fff;line-height:1.1;margin-bottom:.4rem;">Schedule Your <em style="color:var(--mint);">Appointment</em></h1>
       <p style="font-size:13.5px;color:rgba(255,255,255,.6);">In-person at Ballito or virtual nationwide · Secure online payment below</p>
     </div>
-    <div style="text-align:right;"><div style="font-size:10px;color:rgba(255,255,255,.45);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;">Prefer to call?</div><div style="font-size:1.5rem;font-weight:700;color:var(--gold);">065 989 3363</div></div>
+    <div style="text-align:right;">
+      <div style="font-size:10px;color:rgba(255,255,255,.45);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;">Prefer to call?</div>
+      <div style="font-size:1.5rem;font-weight:700;color:var(--gold);">065 989 3363</div>
+    </div>
   </div>
+
+  <!-- ── QUESTIONNAIRE BANNER ── -->
+  <div style="background:linear-gradient(135deg,rgba(70,146,145,.12),rgba(70,94,109,.08));border-bottom:1px solid var(--border);padding:1.25rem var(--pad);">
+    <div style="max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:.85rem;">
+        <div style="font-size:1.75rem;flex-shrink:0;">📋</div>
+        <div>
+          <div style="font-size:13.5px;font-weight:700;color:var(--charcoal);">Complete your Health Questionnaire before your visit</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px;">Takes 5 minutes · Helps Dr Phiri personalise your care from day one · Private &amp; confidential</div>
+        </div>
+      </div>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdE4LwHMtT0Q1A9ZmP1G1PPhGhRT8KzXJ5v40d07uanrvkQPQ/viewform" target="_blank"
+         style="flex-shrink:0;background:var(--forest);color:#fff;padding:.65rem 1.35rem;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap;transition:opacity .2s;"
+         onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+        Start Questionnaire →
+      </a>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
   <div style="padding:2.5rem var(--pad);background:var(--paper);display:grid;grid-template-columns:1fr 340px;gap:2.5rem;align-items:start;">
     <!-- LEFT -->
     <div>
@@ -111,20 +136,18 @@
           </div>
         </div>
       </div>
+
       <!-- Step 2: Payment -->
       <div class="pay-inbook">
         <h3>Step 2 — Pay for Your Programme</h3>
         <p>Select your plan and complete payment securely below.</p>
-        <!-- Plan pills -->
         <div class="plan-pills">
-          <div class="plan-pill sel" onclick="inbookPickPlan(this,'Foundation','1500',6)"><div class="pp-icon"></div><div class="pp-name">Foundation</div><div class="pp-price">R1,500</div><div style="font-size:10px;color:var(--muted);">per month </div></div>
+          <div class="plan-pill sel" onclick="inbookPickPlan(this,'Foundation','1500',6)"><div class="pp-icon"></div><div class="pp-name">Foundation</div><div class="pp-price">R1,500</div><div style="font-size:10px;color:var(--muted);">per month</div></div>
           <div class="plan-pill" onclick="inbookPickPlan(this,'Premium','3500',6)"><div class="pp-icon"></div><div class="pp-name">Premium</div><div class="pp-price">R3,500</div><div style="font-size:10px;color:var(--muted);">per month</div></div>
           <div class="plan-pill" onclick="inbookPickPlan(this,'Executive','10000',6)"><div class="pp-icon"></div><div class="pp-name">Executive</div><div class="pp-price">R10,000</div><div style="font-size:10px;color:var(--muted);">per month</div></div>
           <div class="plan-pill" onclick="inbookPickPlan(this,'Consultation','500',1)"><div class="pp-icon"></div><div class="pp-name">Consultation</div><div class="pp-price">R500</div><div style="font-size:10px;color:var(--muted);">Once-off</div></div>
         </div>
-        <!-- Includes -->
         <div class="inc-box"><div class="inc-box-title">✅ Included — <span id="ib-plan-name">Foundation Plan</span></div><ul id="ib-inc-list" style="padding:0;margin:0;"></ul></div>
-        <!-- Payment tabs -->
         <div class="ptabs" style="margin-top:1.25rem;">
           <div class="ptab sel" onclick="ibPickMethod(this,'card')"><div class="ptib-icon"></div><div class="ptib-name">Card</div></div>
           <div class="ptab"     onclick="ibPickMethod(this,'eft')"><div class="ptib-icon"></div><div class="ptib-name">EFT</div></div>
@@ -166,6 +189,7 @@
         </div>
       </div>
     </div>
+
     <!-- SIDEBAR -->
     <div class="book-sidebar">
       <div class="sum-card">
@@ -185,6 +209,19 @@
         <strong style="color:var(--charcoal);">Questions?</strong><br>
         <a href="tel:0659893363" style="color:var(--forest);font-weight:700;">065 989 3363</a>
       </div>
+
+      <!-- Questionnaire reminder in sidebar -->
+      <div style="margin-top:.85rem;background:linear-gradient(135deg,rgba(70,146,145,.12),rgba(70,94,109,.08));border:1px solid rgba(70,146,145,.25);border-radius:14px;padding:1.1rem;text-align:center;">
+        <div style="font-size:1.3rem;margin-bottom:.35rem;">📋</div>
+        <div style="font-size:12px;font-weight:700;color:var(--charcoal);margin-bottom:.25rem;">Health Questionnaire</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:.75rem;line-height:1.6;">Please complete this before your appointment so Dr Phiri can personalise your care.</div>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdE4LwHMtT0Q1A9ZmP1G1PPhGhRT8KzXJ5v40d07uanrvkQPQ/viewform" target="_blank"
+           style="display:block;background:var(--forest);color:#fff;padding:.55rem 1rem;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;transition:opacity .2s;"
+           onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+          Complete Now →
+        </a>
+      </div>
+
       <div style="margin-top:.85rem;background:var(--forest);border-radius:14px;padding:1.1rem;text-align:center;">
         <div style="font-size:10.5px;color:var(--mint);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:.65rem;">Follow Us</div>
         <div style="display:flex;justify-content:center;gap:8px;">
@@ -196,7 +233,8 @@
       </div>
     </div>
   </div>
-  <footer><div class="f-logo">Dr M Phiri · <span>Medical Weight Loss </span></div><div class="f-links"><a href="index.html">Home</a><a href="services.html">Services</a><a href="contact.html">Contact</a></div><div class="f-social"><a class="f-soc" href="https://instagram.com" target="_blank">📸</a><a class="f-soc" href="https://wa.me/27659893363" target="_blank">💬</a></div><p>© 2025 Dr M Phiri · Ballito</p></footer>
+
+  <footer><div class="f-logo">Dr M Phiri · <span>Medical Weight Loss</span></div><div class="f-links"><a href="index.html">Home</a><a href="services.html">Services</a><a href="contact.html">Contact</a></div><div class="f-social"><a class="f-soc" href="https://instagram.com" target="_blank">📸</a><a class="f-soc" href="https://wa.me/27659893363" target="_blank">💬</a></div><p>© 2025 Dr M Phiri · Ballito</p></footer>
 </div><!-- /page-booking -->
 <script src="js.asset/script.js" defer></script>
 </body>
