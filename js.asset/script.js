@@ -1,27 +1,27 @@
 const PLANS = [
   {
-    name: "Foundation", price: "1,500", raw: 1500, duration: 6, featured: false,
-    features: ["Full blood panel", "In-depth lifestyle and medical assessment", "Personalised action plan", "Nutrition guidance", "Workout plan", "Monthly Follow up", "Medical weight loss support if clinically indicated"],
+    name: "Foundation", price: "1,500", raw: 1500, duration: 3-6, featured: false,
+    features: ["Full blood panel", "In-depth lifestyle and medical assessment", "Personalised action plan", "Nutrition guidance", "Monthly Follow up", "Medical weight loss support if clinically indicated"],
     suitability: "Built for clients who want structure, medical guidance, and steady accountability. Who it is suitable for: Best for teachers, nurses, receptionists, administrators, retail managers, shift workers, and early-career professionals who want expert direction without a premium-level spend."
   },
   {
-    name: "Premium", price: "3,500", raw: 3500, duration: 6, featured: true, badge: "Most Popular",
-    features: ["Everything in Foundation", "Body Composition Scan", "Grocery Guide", "Personalised Meal plan", "Supplement Guide", "More tailored progress support"],
+    name: "Premium", price: "3,500", raw: 3500, duration: 6-12, featured: true, badge: "Most Popular",
+    features: ["Everything in Foundation", "Monthly follow ups & accountability checks", "Grocery Guide", "Personalised Meal plan and workout plan with video demonstration", "Supplement Guide", "Full GLP-1 Program"],
     suitability: "More personalised support with stronger structure. Built for clients who want a tailored plan, better accountability, and easier day-to-day execution. Who is it suitable for: Best for managers, business owners, office professionals, sales representatives, consultants, and busy parents who need more support and customisation."
   },
   {
-    name: "Executive", price: "10,000", raw: 10000, duration: 6, featured: false,
+    name: "Executive", price: "10,000", raw: 10000, duration: 6-12, featured: false,
     features: ["Everything in Premium", "Dietician support", "Full doctor-led medical weight loss programme", "Gene-testing", "Monthly supplement allocation", "Premium Follow up support"],
     suitability: "Premium high-touch metabolic care. Built for clients who want the highest level of doctor-led support, convenience, and precision. Who it is suitable for: Best for executives, entrepreneurs, doctors, directors, and other high-performance professionals who want a premium service around a demanding schedule."
   }
 ];
 
 const TESTS = [
-  {name:'Nomsa K.',sub:'Lost 18kg · Premium Plan',bg:'#2D6A4F',s:5,t:"Dr Phiri completely changed how I think about weight loss. He found out I had insulin resistance — something no one had checked before."},
-  {name:'Priya M.',sub:'Lost 12kg · Foundation Plan',bg:'#C9A84C',s:5,t:"I've tried every diet. Dr Phiri's approach is different — it's medical. He addresses the actual reason you gain weight. Not just telling you to eat less. Incredible."},
+  {name:'Nomsa K.',sub:'Lost 18kg · Premium Plan',bg:'#2D6A4F',s:5,t:"Dr Phiri completely changed how I think about weight loss. He found out I had insulin resistance, something no one had checked before."},
+  {name:'Priya M.',sub:'Lost 12kg · Foundation Plan',bg:'#C9A84C',s:5,t:"I've tried every diet. Dr Phiri's approach is different, it's medical. He addresses the actual reason you gain weight. Not just telling you to eat less. Incredible."},
   {name:'Thabo D.',sub:'Lost 22kg · Executive Plan',bg:'#1B4332',s:5,t:"Worth every rand. Gene testing revealed a genetic obesity marker. With the tailored GLP-1 programme I've lost 22kg and feel better than I have in 15 years."},
   {name:'Liezel V.',sub:'PCOS Weight Loss',bg:'#40916C',s:5,t:"PCOS made weight loss impossible for me. Dr Phiri treated my hormones first. The weight started dropping naturally. I'm genuinely emotional about my progress."},
-  {name:'Craig S.',sub:'Virtual · Cape Town',bg:'#2D6A4F',s:5,t:"I'm in Cape Town and did everything virtually. Seamless — blood tests at a local lab, all consults on video. Dr Phiri is thorough, kind, and professional."},
+  {name:'Craig S.',sub:'Virtual · Cape Town',bg:'#2D6A4F',s:5,t:"I'm in Cape Town and did everything virtually. Seamless, blood tests at a local lab, all consults on video. Dr Phiri is thorough, kind, and professional."},
   {name:'Fatima A.',sub:'Lost 9kg · Budget Plan',bg:'#74C69D',s:5,t:"Started with the Budget Plan and results exceeded all my expectations. The meal plan was realistic and practical. I recommend Dr Phiri to absolutely everyone."}
 ];
 
@@ -33,7 +33,7 @@ const PF = {
   Important: ['Medication is prescribed only when clinically appropriate after assessment','Programmes are designed to support sustainable progress, not quick fixes','Results vary between individuals depending on medical factors, adherence, lifestyle, and response to treatment.','Supplements and treatment recommendations are tailored to the individual package and clinical need']
 };
 
-let curPlan = { name: 'Foundation', amount: '1500', months: 6 };
+let curPlan = { name: 'Foundation', amount: '1500', months: 3-6 };
 
 /* ─── RENDER PRICING CARDS ─── */
 function renderPricing(id) {
