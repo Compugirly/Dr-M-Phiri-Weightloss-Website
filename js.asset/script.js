@@ -1,16 +1,16 @@
 const PLANS = [
   {
-    name: "Foundation", price: "1,500", raw: 1500, duration: 3-6, featured: false,
+    name: "Foundation", price: "1,500", raw: 1500, duration: "3-6", featured: false,
     features: ["Full blood panel", "In-depth lifestyle and medical assessment", "Personalised action plan", "Nutrition guidance", "Monthly Follow up", "Medical weight loss support if clinically indicated"],
     suitability: "Built for clients who want structure, medical guidance, and steady accountability. Who it is suitable for: Best for teachers, nurses, receptionists, administrators, retail managers, shift workers, and early-career professionals who want expert direction without a premium-level spend."
   },
   {
-    name: "Premium", price: "3,500", raw: 3500, duration: 6-12, featured: true, badge: "Most Popular",
+    name: "Premium", price: "3,500", raw: 3500, duration: "6-12", featured: true, badge: "Most Popular",
     features: ["Everything in Foundation", "Monthly follow ups & accountability checks", "Grocery Guide", "Personalised Meal plan and workout plan with video demonstration", "Supplement Guide", "Full GLP-1 Program"],
     suitability: "More personalised support with stronger structure. Built for clients who want a tailored plan, better accountability, and easier day-to-day execution. Who is it suitable for: Best for managers, business owners, office professionals, sales representatives, consultants, and busy parents who need more support and customisation."
   },
   {
-    name: "Executive", price: "10,000", raw: 10000, duration: 6-12, featured: false,
+    name: "Executive", price: "10,000", raw: 10000, duration: "6-12", featured: false,
     features: ["Everything in Premium", "Dietician support", "Full doctor-led medical weight loss programme", "Gene-testing", "Monthly supplement allocation", "Premium Follow up support"],
     suitability: "Premium high-touch metabolic care. Built for clients who want the highest level of doctor-led support, convenience, and precision. Who it is suitable for: Best for executives, entrepreneurs, doctors, directors, and other high-performance professionals who want a premium service around a demanding schedule."
   }
@@ -33,7 +33,7 @@ const PF = {
   Important: ['Medication is prescribed only when clinically appropriate after assessment','Programmes are designed to support sustainable progress, not quick fixes','Results vary between individuals depending on medical factors, adherence, lifestyle, and response to treatment.','Supplements and treatment recommendations are tailored to the individual package and clinical need']
 };
 
-let curPlan = { name: 'Foundation', amount: '1500', months: 3-6 };
+let curPlan = { name: 'Foundation', amount: '1500', months: "3-6" };
 
 /* ─── RENDER PRICING CARDS ─── */
 function renderPricing(id) {
@@ -201,6 +201,38 @@ function pickTime(el, t) {
   if (s) s.textContent = t;
 }
 
+/* ─── SEND A MESSAGE ─── */
+emailjs.init({ publicKey: "BpcUepaoJqXT3U6B2" });
+
+async function handleContact() {
+  const fname   = document.getElementById('cf-fname').value.trim();
+  const lname   = document.getElementById('cf-lname').value.trim();
+  const email   = document.getElementById('cf-email').value.trim();
+  const phone   = document.getElementById('cf-phone').value.trim();
+  const subject = document.getElementById('cf-subject').value;
+  const message = document.getElementById('cf-message').value.trim();
+
+  if (!fname || !email || !subject || !message) {
+    alert('Please fill in first name, email, subject and message.');
+    return;
+  }
+
+  try {
+    await emailjs.send("service_6pd7h1f", "template_if4oywn", {
+      from_name: fname + ' ' + lname,
+      from_email: email,
+      phone: phone || 'Not provided',
+      subject: subject,
+      message: message,
+      reply_to: email
+    });
+    alert('Message sent! Dr Phiri will be in touch within 24 hours.');
+  } catch(e) {
+    alert('Failed to send. Please try again.');
+    console.error(e);
+  }
+}
+
 /* ─── PAYMENT ─── */
 function inbookPickPlan(el, name, amt, months) {
   el.closest('.plan-pills').querySelectorAll('.plan-pill').forEach(e => e.classList.remove('sel'));
@@ -301,7 +333,7 @@ renderCal();
 (function applyStoredPlan() {
   const stored = localStorage.getItem('selectedPlan');
   if (!stored) {
-    inbookUpdatePlan('Foundation', '1500', 6);
+    inbookUpdatePlan('Foundation', '1500', "3-6");
     return;
   }
   try {
@@ -313,6 +345,6 @@ renderCal();
     inbookUpdatePlan(name, String(amt), pmth);
     localStorage.removeItem('selectedPlan');
   } catch(e) {
-    inbookUpdatePlan('Foundation', '1500', 6);
+    inbookUpdatePlan('Foundation', '1500', "3-6");
   }
 })();
