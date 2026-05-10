@@ -22,7 +22,6 @@
     </div>
   </a>
 
-  <!-- FIX: merged duplicate class attributes into one -->
   <div class="nav-links center" id="nav-links">
     <a href="index.html"         data-page="home">Home</a>
     <a href="about.html"        data-page="about">About</a>
@@ -39,12 +38,9 @@
   </div>
 </nav>
 
-<!-- FIX: removed orphaned stub <div class="page" id="page-contact"><h2>Contact Page</h2></div> -->
-<!-- FIX: page wrapper now correctly wraps all content below the nav -->
 <div class="page active" id="page-contact">
 
   <!-- HERO -->
-  <!-- FIX: removed redundant padding-top (was overridden by the padding shorthand anyway) -->
   <div style="background:var(--forest);padding:calc(var(--nav-h) + 3rem) var(--pad) 3rem;">
     <div class="eyebrow" style="color:var(--mint);">Get In Touch</div>
     <h1 style="font-family:var(--display);font-size:3.2rem;font-weight:700;color:#fff;line-height:1.1;margin-bottom:.6rem;">
@@ -90,7 +86,7 @@
             </div>
           </div>
 
-          <!-- Email — FIX: replaced Cloudflare-obfuscated address with plain readable email -->
+          <!-- Email -->
           <div style="background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:1.4rem 1.6rem;display:flex;align-items:center;gap:1.1rem;transition:all .25s;cursor:default;"
                onmouseover="this.style.borderColor='var(--forest-lt)';this.style.boxShadow='0 4px 20px rgba(27,67,50,.1)'"
                onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
@@ -190,6 +186,6 @@
 
   <!-- EmailJS must come BEFORE your JS file -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script src="js.asset/script.js" defer></script>
+  <script src="js.asset/script.js"></script>
 </body>
 </html>
