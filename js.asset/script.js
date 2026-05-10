@@ -302,12 +302,6 @@ function doBookingAndPay(method) {
     showSuccess(`Booking Confirmed + Payment Successful!\nDate: ${sd.textContent} at ${st.textContent} · ${curPlan.name} Plan (R${fmt}). See you then, ${fn.value}!`);
 }
 
-/* ─── CONTACT ─── */
-function handleContact() {
-  const fn = document.getElementById('cf-fname');
-  if (!fn || !fn.value.trim()) { alert('Please fill in your name.'); return; }
-  showSuccess(`Message Sent!\nThank you ${fn.value}. Dr Phiri's team will respond within 24 hours.`);
-}
 
 /* ─── SUCCESS ─── */
 function showSuccess(msg) {
