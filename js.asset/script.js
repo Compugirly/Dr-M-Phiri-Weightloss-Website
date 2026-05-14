@@ -127,29 +127,49 @@ function toggleMobile() {
 let calM = new Date().getMonth(), calY = new Date().getFullYear();
 
 function renderCal() {
-  const mn = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const ct = document.getElementById('cal-title'), cg = document.getElementById('cal-grid');
+  const mn  = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const ct  = document.getElementById('cal-title'), cg = document.getElementById('cal-grid');
   if (!ct || !cg) return;
-  ct.textContent = `${mn[calM]} ${calY}`;
-  const ds = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+  ct.textContent = mn[calM] + ' ' + calY;
+  const ds    = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
   const today = new Date();
-  const fd = new Date(calY, calM, 1).getDay();
-  const dim = new Date(calY, calM + 1, 0).getDate();
-  let html = ds.map(d => `<div class="cal-dh">${d}</div>`).join('');
+  const fd    = new Date(calY, calM, 1).getDay();
+  const dim   = new Date(calY, calM + 1, 0).getDate();
+
+  let html = ds.map(d => '<div class="cal-dh">' + d + '</div>').join('');
   for (let i = 0; i < fd; i++) html += '<div class="cal-d emp"></div>';
   for (let d = 1; d <= dim; d++) {
-    const dt = new Date(calY, calM, d);
-    const isT = dt.toDateString() === today.toDateString();
-    const dis = (dt < today && !isT) || dt.getDay() === 0;
-    html += `<div class="cal-d${isT ? ' tod' : ''}${dis ? ' dis' : ''}" ${dis ? '' : `onclick="pickDate(this,${d})"`}>${d}</div>`;
+    const dt     = new Date(calY, calM, d);
+    const isT    = dt.toDateString() === today.toDateString();
+    const isPast = dt < today && !isT;
+    const isSun  = dt.getDay() === 0;
+    const hasAv  = !isPast && !isSun && dayHasAvailability(calY, calM, d);
+    const dis    = isPast || isSun || !hasAv;
+
+    let cls = 'cal-d';
+    if (isT)   cls += ' tod';
+    if (dis)   cls += ' dis';
+    if (hasAv) cls += ' avail';
+    html += '<div class="' + cls + '"' + (dis ? '' : ' onclick="pickDate(this,' + d + ')"') + '>' + d + '</div>';
   }
   cg.innerHTML = html;
+
+  // Legend — always show since we always have availability
+  if (!document.getElementById('cal-legend')) {
+    const leg = document.createElement('div');
+    leg.id = 'cal-legend';
+    leg.style.cssText = 'display:flex;gap:1rem;margin-top:.65rem;font-size:11px;color:var(--muted);flex-wrap:wrap;';
+    leg.innerHTML =
+      '<span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:var(--forest);display:inline-block;"></span>Available</span>' +
+      '<span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#d1d5db;display:inline-block;"></span>Unavailable / Fully booked</span>';
+    cg.parentElement.appendChild(leg);
+  }
 }
 
 function changeMonth(dir) {
   calM += dir;
   if (calM > 11) { calM = 0; calY++; }
-  if (calM < 0) { calM = 11; calY--; }
+  if (calM < 0)  { calM = 11; calY--; }
   renderCal();
 }
 
@@ -158,7 +178,32 @@ function pickDate(el, d) {
   el.classList.add('sel');
   const mn = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const sd = document.getElementById('sum-date');
-  if (sd) sd.textContent = `${d} ${mn[calM]} ${calY}`;
+  if (sd) sd.textContent = d + ' ' + mn[calM] + ' ' + calY;
+  selectedDateKey = isoKey(calY, calM, d);
+  const st = document.getElementById('sum-time');
+  if (st) st.textContent = 'Select a time';
+  renderTimeSlots(selectedDateKey);
+}
+
+/* ─── TIME SLOTS (live from admin availability) ─── */
+function renderTimeSlots(dateKey) {
+  const wrap = document.querySelector('.tslots');
+  if (!wrap) return;
+  const avail     = getAvail();
+  const dt        = new Date(dateKey + 'T00:00:00');
+  const dayName   = DAY_NAMES[dt.getDay()];
+  const allSlots  = (avail[dayName] && avail[dayName].slots) ? avail[dayName].slots : [];
+  const available = getAvailableSlots(dateKey);
+  const booked    = getBookings().filter(b => b.date === dateKey).map(b => b.time);
+
+  // If admin hasn't set up availability yet, keep the static slots as-is
+  if (!allSlots.length) return;
+
+  wrap.innerHTML = allSlots.map(s => {
+    if (booked.includes(s))    return '<div class="tslot unav" title="Already booked">' + s + ' 🔒</div>';
+    if (available.includes(s)) return '<div class="tslot" onclick="pickTime(this,\'' + s + '\')">' + s + '</div>';
+    return '<div class="tslot unav">' + s + '</div>';
+  }).join('');
 }
 
 /* ─── LIGHTBOX ─── */
@@ -215,14 +260,26 @@ async function handleContact() {
     return;
   }
 
+  // Pack ALL patient details into the message body so they always appear in the email
+  const fullBody =
+    'PATIENT ENQUIRY — CONTACT FORM\n' +
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+    'First Name : ' + fname + '\n' +
+    'Last Name  : ' + (lname || 'Not provided') + '\n' +
+    'Email      : ' + email + '\n' +
+    'Phone      : ' + (phone || 'Not provided') + '\n' +
+    'Subject    : ' + subject + '\n' +
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+    'Message:\n' + message;
+
   try {
     await emailjs.send("service_6pd7h1f", "template_if4oywn", {
-      from_name: fname + ' ' + lname,
+      from_name:  fname + ' ' + lname,
       from_email: email,
-      phone: phone || 'Not provided',
-      subject: subject,
-      message: message,
-      reply_to: email
+      phone:      phone || 'Not provided',
+      subject:    subject,
+      message:    fullBody,
+      reply_to:   email
     });
     alert('Message sent! Dr Phiri will be in touch within 24 hours.');
   } catch(e) {
@@ -263,9 +320,11 @@ function inbookUpdatePlan(name, amt, months) {
 function ibPickMethod(el, m) {
   el.closest('.ptabs').querySelectorAll('.ptab').forEach(t => t.classList.remove('sel'));
   el.classList.add('sel');
-  document.getElementById('ib-card-sec').style.display = m === 'card' ? 'block' : 'none';
-  document.getElementById('ib-eft-sec').style.display = m === 'eft' ? 'block' : 'none';
-  document.getElementById('ib-ss-sec').style.display = m === 'snapscan' ? 'block' : 'none';
+  document.getElementById('ib-card-sec').style.display    = m === 'card'     ? 'block' : 'none';
+  document.getElementById('ib-eft-sec').style.display     = m === 'eft'      ? 'block' : 'none';
+  document.getElementById('ib-ss-sec').style.display      = m === 'snapscan' ? 'block' : 'none';
+  const pl = document.getElementById('ib-pl-sec');
+  if (pl) pl.style.display = m === 'paylater' ? 'block' : 'none';
 }
 
 function ibFmtCard(inp) {
@@ -284,33 +343,218 @@ function ibFmtExp(inp) {
   if (d) d.textContent = inp.value || 'MM / YY';
 }
 
-function doBookingAndPay(method) {
-  const fn = document.getElementById('b-fname');
-  const sd = document.getElementById('sum-date');
-  const st = document.getElementById('sum-time');
-  if (!fn || !fn.value.trim()) { alert('Please fill in your name in Step 1.'); return; }
+/* ─── AVAILABILITY HELPERS ─── */
+const DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+// Hardcoded default schedule — Mon–Fri 09:00–17:00, Sat 09:00–13:00, Sun closed
+const WEEKDAY_SLOTS = [
+  '09:00','09:30','10:00','10:30','11:00','11:30',
+  '12:00','12:30','13:00','13:30','14:00','14:30',
+  '15:00','15:30','16:00','16:30'
+];
+const SATURDAY_SLOTS = [
+  '09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30'
+];
+const DEFAULT_AVAIL = {
+  Monday:    { on: true,  slots: WEEKDAY_SLOTS },
+  Tuesday:   { on: true,  slots: WEEKDAY_SLOTS },
+  Wednesday: { on: true,  slots: WEEKDAY_SLOTS },
+  Thursday:  { on: true,  slots: WEEKDAY_SLOTS },
+  Friday:    { on: true,  slots: WEEKDAY_SLOTS },
+  Saturday:  { on: true,  slots: SATURDAY_SLOTS },
+  Sunday:    { on: false, slots: [] }
+};
+
+function getAvail() {
+  // Admin panel overrides take priority; otherwise use the hardcoded schedule
+  try {
+    const stored = localStorage.getItem('drp_avail');
+    if (stored) return JSON.parse(stored);
+  } catch(e) {}
+  return DEFAULT_AVAIL;
+}
+function getBlocked()  { try{return JSON.parse(localStorage.getItem('drp_blocked'))||[];}catch(e){return[];} }
+function getBookings() { try{return JSON.parse(localStorage.getItem('drp_bookings'))||[];}catch(e){return[];} }
+
+function isoKey(y,m,d) {
+  return y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+}
+
+function dayHasAvailability(y,m,d) {
+  const dayName = DAY_NAMES[new Date(y,m,d).getDay()];
+  const avail   = getAvail();
+  const dateKey = isoKey(y,m,d);
+  if (getBlocked().includes(dateKey)) return false;
+  if (!avail[dayName] || !avail[dayName].on || !avail[dayName].slots.length) return false;
+  const bookedTimes = getBookings().filter(b=>b.date===dateKey).map(b=>b.time);
+  return avail[dayName].slots.some(s=>!bookedTimes.includes(s));
+}
+
+function getAvailableSlots(dateKey) {
+  const dt      = new Date(dateKey+'T00:00:00');
+  const dayName = DAY_NAMES[dt.getDay()];
+  const avail   = getAvail();
+  if (getBlocked().includes(dateKey)) return [];
+  if (!avail[dayName]||!avail[dayName].on) return [];
+  const bookedTimes = getBookings().filter(b=>b.date===dateKey).map(b=>b.time);
+  return avail[dayName].slots.filter(s=>!bookedTimes.includes(s));
+}
+
+let selectedDateKey = null;
+
+/* ─── GOOGLE CALENDAR LINK BUILDER ─── */
+function buildGCalLink(dateStr, timeStr, fullName, apptType, reason, phone, email, plan, payStatus) {
+  const months = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11,
+                  January:0,February:1,March:2,April:3,June:5,July:6,August:7,September:8,October:9,November:10,December:11};
+  const parts = dateStr.trim().split(' ');
+  const start = new Date(parseInt(parts[2]), months[parts[1]], parseInt(parts[0]),
+                         parseInt(timeStr.split(':')[0]), parseInt(timeStr.split(':')[1]));
+  const end   = new Date(start.getTime() + 30*60000);
+  const pad   = n => String(n).padStart(2,'0');
+  const fmt   = d => `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
+  return 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+    '&text=' + encodeURIComponent('🩺 Appt: ' + fullName + ' — ' + apptType) +
+    '&dates=' + fmt(start) + '/' + fmt(end) +
+    '&details=' + encodeURIComponent('Patient: '+fullName+'\nPhone: '+phone+'\nEmail: '+email+'\nReason: '+reason+'\nPlan: '+plan+'\nPayment: '+payStatus) +
+    '&location=' + encodeURIComponent('Suite 13, Room 2, Odyssey Medical Centre, 1 Simbithi Dr, Ballito');
+}
+
+/* ─── BOOKING ─── */
+async function doBookingAndPay(method) {
+  const fnEl     = document.getElementById('b-fname');
+  const lnEl     = document.getElementById('b-lname');
+  const emailEl  = document.getElementById('b-email');
+  const phoneEl  = document.getElementById('b-phone');
+  const reasonEl = document.getElementById('b-reason');
+  const sd       = document.getElementById('sum-date');
+  const st       = document.getElementById('sum-time');
+  const typeEl   = document.getElementById('sum-type');
+
+  if (!fnEl || !fnEl.value.trim()) { alert('Please fill in your first name.'); return; }
   if (!sd || sd.textContent === 'Select a date') { alert('Please select a date.'); return; }
   if (!st || st.textContent === 'Select a time') { alert('Please select a time slot.'); return; }
-  const fmt = parseInt(curPlan.amount).toLocaleString();
-  if (method === 'eft')
-    showSuccess(`Booking Confirmed!\nDate: ${sd.textContent} at ${st.textContent} · ${curPlan.name} Plan (R${fmt}). EFT banking details have been emailed to you.`);
+
+  const fname    = fnEl.value.trim();
+  const lname    = lnEl     ? lnEl.value.trim()    : '';
+  const email    = emailEl  ? emailEl.value.trim() : '';
+  const phone    = phoneEl  ? phoneEl.value.trim() : '';
+  const reason   = reasonEl ? reasonEl.value       : 'Not selected';
+  const fullName = (fname + ' ' + lname).trim();
+  const apptType = typeEl   ? typeEl.textContent   : 'In-Person';
+  const amtFmt   = parseInt(curPlan.amount).toLocaleString();
+
+  const payLabels = {
+    card:     '✅ PAID — Card',
+    eft:      '⚠️ PAYMENT PENDING — EFT (not yet received)',
+    snapscan: '⚠️ PAYMENT PENDING — SnapScan (patient self-reported)',
+    paylater: '📋 PAY ON THE DAY — Patient pays after consultation'
+  };
+  const payStatus  = payLabels[method] || 'Unknown';
+  const isPaid     = method === 'card';
+  const isPayLater = method === 'paylater';
+
+  // ── Google Calendar link ──
+  const gcalLink = buildGCalLink(
+    sd.textContent, st.textContent, fullName, apptType, reason,
+    phone||'Not provided', email||'Not provided',
+    curPlan.name+' Plan — R'+amtFmt, payStatus
+  );
+
+  // ── Email subject ──
+  const prefix = isPaid ? '✅ New Paid Booking' : isPayLater ? '📋 New Booking — Pay on Day' : '⚠️ New Booking — Payment Pending';
+  const emailSubject = prefix + ' | ' + fullName + ' | ' + sd.textContent + ' at ' + st.textContent;
+
+  // ── Email body ──
+  const body =
+    '═══════════════════════════════════════\n' +
+    '  NEW APPOINTMENT — DR M PHIRI WEBSITE \n' +
+    '═══════════════════════════════════════\n\n' +
+    '📅 ADD TO GOOGLE CALENDAR:\n' + gcalLink + '\n\n' +
+    'PAYMENT STATUS: ' + payStatus + '\n\n' +
+    '─── PATIENT DETAILS ────────────────────\n' +
+    '  Name  : ' + fullName + '\n' +
+    '  Email : ' + (email||'Not provided') + '\n' +
+    '  Phone : ' + (phone||'Not provided') + '\n\n' +
+    '─── APPOINTMENT ────────────────────────\n' +
+    '  Type   : ' + apptType + '\n' +
+    '  Date   : ' + sd.textContent + '\n' +
+    '  Time   : ' + st.textContent + '\n' +
+    '  Reason : ' + reason + '\n\n' +
+    '─── PLAN & PAYMENT ─────────────────────\n' +
+    '  Plan   : ' + curPlan.name + ' Plan\n' +
+    '  Amount : R' + amtFmt + '\n\n' +
+    (isPayLater ? '⚠️ REMINDER: ' + fullName + ' will pay R' + amtFmt + ' at the end of the consultation on ' + sd.textContent + '.\n' :
+     !isPaid    ? '⚠️ ACTION REQUIRED: Verify payment before the appointment.\n' : '') +
+    '\n═══════════════════════════════════════';
+
+  // ── Send email to Dr Phiri ──
+  try {
+    await emailjs.send("service_6pd7h1f", "template_if4oywn", {
+      from_name:  fullName,
+      from_email: email || 'noreply@drphiri.co.za',
+      phone:      phone || 'Not provided',
+      subject:    emailSubject,
+      message:    body,
+      reply_to:   email || 'noreply@drphiri.co.za'
+    });
+  } catch(e) {
+    console.error('EmailJS booking alert failed:', e);
+  }
+
+  // ── Save booking so slot locks on calendar ──
+  if (selectedDateKey) {
+    const bookings = getBookings();
+    bookings.push({ date: selectedDateKey, time: st.textContent, name: fullName, plan: curPlan.name });
+    localStorage.setItem('drp_bookings', JSON.stringify(bookings));
+    renderCal();
+  }
+
+  // ── Store gcal link for success overlay ──
+  window._lastGcalLink = gcalLink;
+
+  // ── Patient-facing confirmation ──
+  if (isPayLater)
+    showSuccess('Booking Confirmed!\nDate: ' + sd.textContent + ' at ' + st.textContent + ' · ' + curPlan.name + ' Plan. Payment of R' + amtFmt + ' is due after your consultation. See you then, ' + fname + '!');
+  else if (method === 'eft')
+    showSuccess('Booking Confirmed!\nDate: ' + sd.textContent + ' at ' + st.textContent + ' · ' + curPlan.name + ' Plan (R' + amtFmt + '). Please EFT using reference: ' + fullName + '. Banking details are on the booking page.');
   else if (method === 'snapscan')
-    showSuccess(`Booking Confirmed!\nDate: ${sd.textContent} at ${st.textContent} · ${curPlan.name} Plan (R${fmt}). Thank you, ${fn.value}!`);
+    showSuccess('Booking Confirmed!\nDate: ' + sd.textContent + ' at ' + st.textContent + ' · ' + curPlan.name + ' Plan (R' + amtFmt + '). Please complete your SnapScan payment. Thank you, ' + fname + '!');
   else
-    showSuccess(`Booking Confirmed + Payment Successful!\nDate: ${sd.textContent} at ${st.textContent} · ${curPlan.name} Plan (R${fmt}). See you then, ${fn.value}!`);
+    showSuccess('Booking Confirmed & Payment Received!\nDate: ' + sd.textContent + ' at ' + st.textContent + ' · ' + curPlan.name + ' Plan (R' + amtFmt + '). See you then, ' + fname + '!');
 }
 
 /* ─── SUCCESS ─── */
 function showSuccess(msg) {
   const parts = msg.split('\n');
   document.getElementById('suc-title').textContent = parts[0];
-  document.getElementById('suc-sub').textContent = parts.slice(1).join(' ') || "Dr Phiri's team will be in touch soon.";
+  document.getElementById('suc-sub').textContent   = parts.slice(1).join(' ') || "Dr Phiri's team will be in touch soon.";
+
+  // Inject Google Calendar button if this was a booking
+  const gcalLink = window._lastGcalLink;
+  const sucOv    = document.getElementById('suc-ov');
+  let gcalEl     = document.getElementById('suc-gcal-btn');
+  if (!gcalEl && sucOv) {
+    gcalEl = document.createElement('div');
+    gcalEl.id = 'suc-gcal-btn';
+    gcalEl.style.cssText = 'margin-top:1.25rem;text-align:center;';
+    sucOv.appendChild(gcalEl);
+  }
+  if (gcalEl) {
+    gcalEl.innerHTML = gcalLink
+      ? '<a href="' + gcalLink + '" target="_blank" rel="noopener noreferrer" ' +
+        'style="display:inline-flex;align-items:center;gap:9px;background:#1a73e8;color:#fff;padding:.75rem 1.4rem;border-radius:11px;font-size:13.5px;font-weight:700;text-decoration:none;">' +
+        '📅 Add to Google Calendar</a>' +
+        '<div style="font-size:11px;color:#888;margin-top:.5rem;">Dr Phiri also received this link by email.</div>'
+      : '';
+  }
+
   document.getElementById('suc-ov').classList.add('show');
 }
 
 function closeSuccess() {
   document.getElementById('suc-ov').classList.remove('show');
-  showPage('home');
+  window._lastGcalLink = null;
+  window.location.href = 'index.html';
 }
 
 /* ─── INIT ─── */

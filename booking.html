@@ -152,6 +152,7 @@
           <div class="ptab sel" onclick="ibPickMethod(this,'card')"><div class="ptib-icon"></div><div class="ptib-name">Card</div></div>
           <div class="ptab"     onclick="ibPickMethod(this,'eft')"><div class="ptib-icon"></div><div class="ptib-name">EFT</div></div>
           <div class="ptab"     onclick="ibPickMethod(this,'snapscan')"><div class="ptib-icon"></div><div class="ptib-name">SnapScan</div></div>
+          <div class="ptab"     onclick="ibPickMethod(this,'paylater')"><div class="ptib-icon"></div><div class="ptib-name">Pay Later</div></div>
         </div>
         <!-- Card -->
         <div id="ib-card-sec">
@@ -186,6 +187,22 @@
           <p style="font-size:12.5px;color:var(--muted);margin-bottom:1.25rem;">Search <strong>"Dr Phiri Ballito"</strong> in the SnapScan app.</p>
           <div style="width:150px;height:150px;background:var(--paper);border:2px solid var(--border);border-radius:12px;margin:0 auto 1.25rem;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;"><span style="font-size:2rem;">QR</span><span style="font-size:9px;color:var(--muted);font-weight:700;letter-spacing:1px;">DR PHIRI BALLITO</span></div>
           <button class="pay-submit" style="max-width:300px;margin:0 auto;" onclick="doBookingAndPay('snapscan')">✅ Confirm Booking &amp; Payment Done</button>
+        </div>
+        <!-- Pay Later -->
+        <div id="ib-pl-sec" style="display:none;">
+          <div style="background:linear-gradient(135deg,rgba(27,67,50,.06),rgba(64,145,108,.08));border:1.5px solid rgba(27,67,50,.18);border-radius:16px;padding:1.5rem 1.6rem;margin-bottom:1rem;">
+            <div style="display:flex;align-items:flex-start;gap:.85rem;">
+              <div style="font-size:1.8rem;flex-shrink:0;">📋</div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:var(--charcoal);margin-bottom:.35rem;">Pay After Your Consultation</div>
+                <p style="font-size:12.5px;color:var(--muted);line-height:1.75;margin:0;">Book your appointment now and pay at the end of your consultation via card, EFT, or cash. Dr Phiri will be notified that payment is due on the day.</p>
+              </div>
+            </div>
+          </div>
+          <div style="background:#fffbe6;border:1.5px solid #f5c842;border-radius:12px;padding:1rem 1.2rem;margin-bottom:1rem;font-size:12.5px;color:#7a6000;line-height:1.75;">
+            ⚠️ <strong>Please note:</strong> By confirming, you agree to settle the consultation fee on the day. Cancellations must be made at least 24 hours in advance.
+          </div>
+          <button class="pay-submit" style="background:var(--forest);" onclick="doBookingAndPay('paylater')">📅 Confirm Booking — Pay on the Day</button>
         </div>
       </div>
     </div>
@@ -236,6 +253,30 @@
 
   <footer><div class="f-logo">Dr M Phiri · <span>Medical Weight Loss</span></div><div class="f-links"><a href="index.html">Home</a><a href="services.html">Services</a><a href="contact.html">Contact</a></div><div class="f-social"><a class="f-soc" href="https://instagram.com" target="_blank">📸</a><a class="f-soc" href="https://wa.me/27659893363" target="_blank">💬</a></div><p>© 2025 Dr M Phiri · Ballito</p></footer>
 </div><!-- /page-booking -->
+<style>
+  /* Available calendar day highlight */
+  .cal-d.avail { background: var(--mint-pale); color: var(--forest); font-weight: 700; }
+  .cal-d.avail:hover { background: var(--forest); color: #fff; }
+  /* Success overlay */
+  #suc-ov { display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;align-items:center;justify-content:center;padding:1.5rem; }
+  #suc-ov.show { display:flex; }
+  #suc-inner { background:#fff;border-radius:20px;padding:2.5rem 2rem;max-width:480px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25); }
+  #suc-icon  { font-size:3rem;margin-bottom:.85rem; }
+  #suc-title { font-size:1.3rem;font-weight:800;color:var(--charcoal);margin-bottom:.5rem; }
+  #suc-sub   { font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:1.25rem; }
+  #suc-close { background:var(--forest);color:#fff;border:none;border-radius:11px;padding:.7rem 2rem;font-size:14px;font-weight:700;cursor:pointer;margin-top:.75rem; }
+</style>
+
+<!-- Success Overlay -->
+<div id="suc-ov">
+  <div id="suc-inner">
+    <div id="suc-icon">✅</div>
+    <div id="suc-title">Booking Confirmed!</div>
+    <div id="suc-sub">Dr Phiri's team will be in touch soon.</div>
+    <button id="suc-close" onclick="closeSuccess()">Back to Home</button>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="js.asset/script.js"></script>
 </body>
