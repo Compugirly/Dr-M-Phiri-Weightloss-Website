@@ -149,13 +149,21 @@
         </div>
         <div class="inc-box"><div class="inc-box-title">✅ Included — <span id="ib-plan-name">Foundation Plan</span></div><ul id="ib-inc-list" style="padding:0;margin:0;"></ul></div>
         <div class="ptabs" style="margin-top:1.25rem;">
-          <div class="ptab sel" onclick="ibPickMethod(this,'card')"><div class="ptib-icon"></div><div class="ptib-name">Card</div></div>
-          <div class="ptab"     onclick="ibPickMethod(this,'eft')"><div class="ptib-icon"></div><div class="ptib-name">EFT</div></div>
-          <div class="ptab"     onclick="ibPickMethod(this,'snapscan')"><div class="ptib-icon"></div><div class="ptib-name">SnapScan</div></div>
-          <div class="ptab"     onclick="ibPickMethod(this,'paylater')"><div class="ptib-icon"></div><div class="ptib-name">Pay Later</div></div>
+          <div class="ptab" style="opacity:.45;cursor:not-allowed;position:relative;" title="Coming Soon">
+            <div class="ptib-icon"></div>
+            <div class="ptib-name">Card</div>
+            <div style="position:absolute;top:-7px;right:-7px;background:#6b7280;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:20px;letter-spacing:.5px;white-space:nowrap;">SOON</div>
+          </div>
+          <div class="ptab sel" onclick="ibPickMethod(this,'eft')"><div class="ptib-icon"></div><div class="ptib-name">EFT</div></div>
+          <div class="ptab" style="opacity:.45;cursor:not-allowed;position:relative;" title="Coming Soon">
+            <div class="ptib-icon"></div>
+            <div class="ptib-name">SnapScan</div>
+            <div style="position:absolute;top:-7px;right:-7px;background:#6b7280;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:20px;letter-spacing:.5px;white-space:nowrap;">SOON</div>
+          </div>
+          <div class="ptab" onclick="ibPickMethod(this,'paylater')"><div class="ptib-icon"></div><div class="ptib-name">Pay Later</div></div>
         </div>
-        <!-- Card -->
-        <div id="ib-card-sec">
+        <!-- Card (disabled — coming soon) -->
+        <div id="ib-card-sec" style="display:none;">
           <div class="card-vis">
             <div style="display:flex;justify-content:space-between;align-items:flex-start;"><div class="c-chip"></div><div class="c-mc"><span class="c1"></span><span class="c2"></span></div></div>
             <div class="c-num" id="ib-d-num">•••• •••• •••• ••••</div>
@@ -167,8 +175,8 @@
           <div class="secure-badge">🔒 <span>256-bit SSL encryption. Card details are never stored.</span></div>
           <button class="pay-submit" onclick="doBookingAndPay('card')">🔒 Confirm &amp; Pay <span id="ib-btn-amt">R1,500</span></button>
         </div>
-        <!-- EFT -->
-        <div id="ib-eft-sec" style="display:none;">
+        <!-- EFT — shown by default -->
+        <div id="ib-eft-sec">
           <p style="font-size:13px;color:var(--muted);margin-bottom:.9rem;line-height:1.7;">Use the details below. Reference: <strong style="color:var(--charcoal);">Your Name + Plan</strong></p>
           <div class="eft-box">
             <div class="er"><span>Bank</span><span>Investec</span></div>
@@ -180,7 +188,7 @@
           </div>
           <button class="pay-submit" style="margin-top:.9rem;" onclick="doBookingAndPay('eft')">📧 Confirm Booking &amp; Email EFT Details</button>
         </div>
-        <!-- SnapScan -->
+        <!-- SnapScan (disabled — coming soon) -->
         <div id="ib-ss-sec" style="display:none;text-align:center;padding:1.25rem 0;">
           <div style="font-size:2.5rem;margin-bottom:.6rem;">📱</div>
           <p style="font-size:14px;font-weight:700;color:var(--charcoal);margin-bottom:.3rem;">Scan to Pay with SnapScan</p>
