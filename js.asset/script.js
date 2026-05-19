@@ -34,6 +34,8 @@ const PF = {
 };
 
 let curPlan = { name: 'Foundation', amount: '1500', months: "3-6 months" };
+let calM = new Date().getMonth();
+let calY = new Date().getFullYear();
 
 /* ─── RENDER PRICING CARDS ─── */
 function renderPricing(id) {
@@ -121,44 +123,6 @@ function showPage(pageId) {
 
 function toggleMobile() {
   document.getElementById('nav-links').classList.toggle('open');
-}
-
-/* ─── CALENDAR ─── */
-let calM = new Date().getMonth(), calY = new Date().getFullYear();
-
-function renderCal() {
-  const mn = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const ct = document.getElementById('cal-title'), cg = document.getElementById('cal-grid');
-  if (!ct || !cg) return;
-  ct.textContent = `${mn[calM]} ${calY}`;
-  const ds = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
-  const today = new Date();
-  const fd = new Date(calY, calM, 1).getDay();
-  const dim = new Date(calY, calM + 1, 0).getDate();
-  let html = ds.map(d => `<div class="cal-dh">${d}</div>`).join('');
-  for (let i = 0; i < fd; i++) html += '<div class="cal-d emp"></div>';
-  for (let d = 1; d <= dim; d++) {
-    const dt = new Date(calY, calM, d);
-    const isT = dt.toDateString() === today.toDateString();
-    const dis = (dt < today && !isT) || dt.getDay() === 0;
-    html += `<div class="cal-d${isT ? ' tod' : ''}${dis ? ' dis' : ''}" ${dis ? '' : `onclick="pickDate(this,${d})"`}>${d}</div>`;
-  }
-  cg.innerHTML = html;
-}
-
-function changeMonth(dir) {
-  calM += dir;
-  if (calM > 11) { calM = 0; calY++; }
-  if (calM < 0) { calM = 11; calY--; }
-  renderCal();
-}
-
-function pickDate(el, d) {
-  document.querySelectorAll('.cal-d').forEach(x => x.classList.remove('sel'));
-  el.classList.add('sel');
-  const mn = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const sd = document.getElementById('sum-date');
-  if (sd) sd.textContent = `${d} ${mn[calM]} ${calY}`;
 }
 
 /* ─── LIGHTBOX ─── */
@@ -315,9 +279,7 @@ function getAvailableSlots(dateKey) {
   return avail[dayName].slots.filter(s=>!booked.includes(s));
 }
 
-/* ─── CALENDAR ─── */
-let calM = new Date().getMonth(), calY = new Date().getFullYear();
-
+/* ─── CALENDAR RENDER ─── */
 function renderCal() {
   const mn  = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   const ct  = document.getElementById('cal-title'), cg = document.getElementById('cal-grid');
@@ -328,7 +290,7 @@ function renderCal() {
   const dim   = new Date(calY,calM+1,0).getDate();
   let html    = ['SUN','MON','TUE','WED','THU','FRI','SAT'].map(d=>'<div class="cal-dh">'+d+'</div>').join('');
   for (let i=0;i<fd;i++) html+='<div class="cal-d emp"></div>';
-  for (let d=1;d<=dim;d++) {
+  for (let d=1; d<=dim; d++) {
     const dt     = new Date(calY,calM,d);
     const isT    = dt.toDateString()===today.toDateString();
     const isPast = dt<today&&!isT;
@@ -427,37 +389,37 @@ async function doBookingAndPay(method) {
   const amtFmt   = parseInt(curPlan.amount).toLocaleString();
 
   const payLabels = {
-    card:     '✅ PAID-Card',
-    eft:      '⚠️ PAYMENT PENDING - EFT (not yet received)',
-    snapscan: '⚠️ PAYMENT PENDING - SnapScan',
-    paylater: '📋 PAY ON THE DAY - Patient pays after consultation'
+    card:     '✅ PAID: Card',
+    eft:      '⚠️ PAYMENT PENDING: EFT (not yet received)',
+    snapscan: '⚠️ PAYMENT PENDING: SnapScan',
+    paylater: '📋 PAY ON THE DAY: Patient pays after consultation'
   };
   const payStatus  = payLabels[method]||'Unknown';
   const isPaid     = method==='card';
   const isPayLater = method==='paylater';
 
   const gcalLink = buildGCalLink(sd.textContent, st.textContent, fullName, apptType, reason,
-    phone||'Not provided', email||'Not provided', curPlan.name+' Plan - R'+amtFmt, payStatus);
+    phone||'Not provided', email||'Not provided', curPlan.name+' Plan: R'+amtFmt, payStatus);
 
-  const prefix = isPaid ? '✅ New Paid Booking' : isPayLater ? '📋 New Booking Pay on Day' : '⚠️ New Booking Payment Pending';
+  const prefix = isPaid ? '✅ New Paid Booking' : isPayLater ? '📋 New Booking: Pay on Day' : '⚠️ New Booking: Payment Pending';
   const emailSubject = prefix+' | '+fullName+' | '+sd.textContent+' at '+st.textContent;
 
   const body =
     '═══════════════════════════════════════\n'+
-    '  NEW APPOINTMENT — DR M PHIRI\n'+
+    '  NEW APPOINTMENT  DR M PHIRI\n'+
     '═══════════════════════════════════════\n\n'+
     '📅 ADD TO GOOGLE CALENDAR:\n'+gcalLink+'\n\n'+
     'PAYMENT STATUS: '+payStatus+'\n\n'+
-    ' PATIENT DETAILS \n'+
+    '─── PATIENT DETAILS ────────────────────\n'+
     '  Name  : '+fullName+'\n'+
     '  Email : '+(email||'Not provided')+'\n'+
     '  Phone : '+(phone||'Not provided')+'\n\n'+
-    ' APPOINTMENT\n'+
+    '─── APPOINTMENT ────────────────────────\n'+
     '  Type   : '+apptType+'\n'+
     '  Date   : '+sd.textContent+'\n'+
     '  Time   : '+st.textContent+'\n'+
     '  Reason : '+reason+'\n\n'+
-    ' PLAN & PAYMENT \n'+
+    '─── PLAN & PAYMENT ─────────────────────\n'+
     '  Plan   : '+curPlan.name+' Plan\n'+
     '  Amount : R'+amtFmt+'\n\n'+
     (isPayLater ? '⚠️ REMINDER: '+fullName+' will pay R'+amtFmt+' after the consultation on '+sd.textContent+'.\n' :
@@ -477,7 +439,7 @@ async function doBookingAndPay(method) {
     console.error('EmailJS failed:', e);
   }
 
-  window._lastGcalLink = gcalLink;
+  window._lastGCalLink = gcalLink;
 
   if (isPayLater)
     showSuccess('Booking Confirmed!\nDate: '+sd.textContent+' at '+st.textContent+' · '+curPlan.name+' Plan. Payment of R'+amtFmt+' is due after your consultation. See you then, '+fname+'!');
@@ -492,7 +454,7 @@ function showSuccess(msg) {
   const parts = msg.split('\n');
   document.getElementById('suc-title').textContent = parts[0];
   document.getElementById('suc-sub').textContent   = parts.slice(1).join(' ') || "Dr Phiri's team will be in touch soon.";
-  const gcalLink = window._lastGcalLink;
+  const gcalLink = window._lastGCalLink;
   const sucOv    = document.getElementById('suc-ov');
   let gcalEl     = document.getElementById('suc-gcal-btn');
   if (!gcalEl&&sucOv) {
@@ -511,7 +473,7 @@ function showSuccess(msg) {
 
 function closeSuccess() {
   document.getElementById('suc-ov').classList.remove('show');
-  window._lastGcalLink = null;
+  window._lastGCalLink = null;
   window.location.href = 'index.html';
 }
 
