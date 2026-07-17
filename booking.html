@@ -16,7 +16,7 @@
     <div class="nav-logo-mark">P</div>
     <div class="nav-logo-text">
       <strong>Dr M Phiri</strong>
-      <small>Medical Weight Loss · Ballito</small>
+      <small> Weight Loss Doc · Ballito</small>
     </div>
   </a>
 
@@ -61,7 +61,7 @@
           <div style="font-size:12px;color:var(--muted);margin-top:2px;">Takes 5 minutes · Helps Dr Phiri personalise your care from day one · Private &amp; confidential</div>
         </div>
       </div>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdE4LwHMtT0Q1A9ZmP1G1PPhGhRT8KzXJ5v40d07uanrvkQPQ/viewform" target="_blank"
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdE4LwHMtT0Q1A9ZmP1G1PPhGhRT8KzXJ5v40d07uanrvkQPQ/viewform" target="_blank" rel="noopener"
          style="flex-shrink:0;background:var(--forest);color:#fff;padding:.65rem 1.35rem;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap;transition:opacity .2s;"
          onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
         Start Questionnaire →
@@ -80,9 +80,18 @@
           <div class="bstep-num">1</div>
           <div style="flex:1"><h4>Appointment Type</h4><p>How would you like to meet?</p>
             <div class="atypes" style="margin-top:.85rem;">
-              <div class="atype sel" onclick="selectAtype(this,'In-Person')"><div class="atype-icon">🏥</div><div class="atype-name">In-Person</div><div class="atype-sub">Ballito</div></div>
-              <div class="atype"     onclick="selectAtype(this,'Virtual')"><div class="atype-icon">📹</div><div class="atype-name">Virtual</div><div class="atype-sub">Nationwide</div></div>
-              <div class="atype"     onclick="selectAtype(this,'Weight Loss')"><div class="atype-icon">⚖️</div><div class="atype-name">Weight Loss</div><div class="atype-sub">Programme</div></div>
+              <div class="atype sel" onclick="selectAtype(this,'In-Person')">
+                <div class="atype-name">In-Person</div>
+                <div class="atype-sub">Ballito</div>
+              </div>
+              <div class="atype" onclick="selectAtype(this,'Virtual')">
+                <div class="atype-name">Virtual</div>
+                <div class="atype-sub">Nationwide</div>
+              </div>
+              <div class="atype" onclick="selectAtype(this,'Weight Loss')">
+                <div class="atype-name">Weight Loss</div>
+                <div class="atype-sub">Programme</div>
+              </div>
             </div>
           </div>
         </div>
@@ -142,12 +151,12 @@
         <h3>Step 2: Pay for Your Programme</h3>
         <p>Select your plan and complete payment securely below.</p>
         <div class="plan-pills">
-          <div class="plan-pill sel" onclick="inbookPickPlan(this,'Foundation','1500',6)"><div class="pp-icon"></div><div class="pp-name">Foundation</div><div class="pp-price">R1,500</div><div style="font-size:10px;color:var(--muted);">per month</div></div>
-          <div class="plan-pill" onclick="inbookPickPlan(this,'Premium','3500',6)"><div class="pp-icon"></div><div class="pp-name">Premium</div><div class="pp-price">R3,500</div><div style="font-size:10px;color:var(--muted);">per month</div></div>
-          <div class="plan-pill" onclick="inbookPickPlan(this,'Executive','10000',6)"><div class="pp-icon"></div><div class="pp-name">Executive</div><div class="pp-price">R10,000</div><div style="font-size:10px;color:var(--muted);">per month</div></div>
-          <div class="plan-pill" onclick="inbookPickPlan(this,'Consultation','500',1)"><div class="pp-icon"></div><div class="pp-name">Consultation</div><div class="pp-price">R500</div><div style="font-size:10px;color:var(--muted);">Once-off</div></div>
+          <div class="plan-pill sel" onclick="inbookPickPlan(this,'Foundation','1500',6)"><div class="pp-name">Foundation</div><div class="pp-price">R1,500</div><div style="font-size:10px;color:var(--muted);">per month</div></div>
+          <div class="plan-pill" onclick="inbookPickPlan(this,'Premium','3500',6)"><div class="pp-name">Premium</div><div class="pp-price">R3,500</div><div style="font-size:10px;color:var(--muted);">per month</div></div>
+          <div class="plan-pill" onclick="inbookPickPlan(this,'Executive','10000',6)"><div class="pp-name">Executive</div><div class="pp-price">R10,000</div><div style="font-size:10px;color:var(--muted);">per month</div></div>
+          <div class="plan-pill" onclick="inbookPickPlan(this,'Consultation','500',1)"><div class="pp-name">Consultation</div><div class="pp-price">R500</div><div style="font-size:10px;color:var(--muted);">Once-off</div></div>
         </div>
-        <div class="inc-box"><div class="inc-box-title">✅ Included — <span id="ib-plan-name">Foundation Plan</span></div><ul id="ib-inc-list" style="padding:0;margin:0;"></ul></div>
+        <div class="inc-box"><div class="inc-box-title"> Included - <span id="ib-plan-name">Foundation Plan</span></div><ul id="ib-inc-list" style="padding:0;margin:0;"></ul></div>
         <div class="ptabs" style="margin-top:1.25rem;">
           <div class="ptab" style="opacity:.45;cursor:not-allowed;position:relative;" title="Coming Soon">
             <div class="ptib-icon"></div>
@@ -172,8 +181,8 @@
           <div class="pfi"><label>Cardholder Name</label><input type="text" placeholder="As on your card" oninput="document.getElementById('ib-d-name').textContent=this.value||'YOUR NAME'"></div>
           <div class="pfi"><label>Card Number</label><input type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="ibFmtCard(this)"></div>
           <div class="pfr"><div class="pfi"><label>Expiry</label><input type="text" placeholder="MM / YY" maxlength="7" oninput="ibFmtExp(this)"></div><div class="pfi"><label>CVV</label><input type="text" placeholder="•••" maxlength="4"></div></div>
-          <div class="secure-badge">🔒 <span>256-bit SSL encryption. Card details are never stored.</span></div>
-          <button class="pay-submit" onclick="doBookingAndPay('card')">🔒 Confirm &amp; Pay <span id="ib-btn-amt">R1,500</span></button>
+          <div class="secure-badge"> <span>256-bit SSL encryption. Card details are never stored.</span></div>
+          <button class="pay-submit" onclick="doBookingAndPay('card')"> Confirm &amp; Pay <span id="ib-btn-amt">R1,500</span></button>
         </div>
         <!-- EFT — shown by default -->
         <div id="ib-eft-sec">
@@ -186,21 +195,20 @@
             <div class="er"><span>Branch Code</span><span>580105</span></div>
             <div class="er"><span>Reference</span><span>YourName + Plan</span></div>
           </div>
-          <button class="pay-submit" style="margin-top:.9rem;" onclick="doBookingAndPay('eft')">📧 Confirm Booking &amp; Email EFT Details</button>
+          <button class="pay-submit" style="margin-top:.9rem;" onclick="doBookingAndPay('eft')"> Confirm Booking &amp; Email EFT Details</button>
         </div>
         <!-- SnapScan (disabled — coming soon) -->
         <div id="ib-ss-sec" style="display:none;text-align:center;padding:1.25rem 0;">
-          <div style="font-size:2.5rem;margin-bottom:.6rem;">📱</div>
           <p style="font-size:14px;font-weight:700;color:var(--charcoal);margin-bottom:.3rem;">Scan to Pay with SnapScan</p>
           <p style="font-size:12.5px;color:var(--muted);margin-bottom:1.25rem;">Search <strong>"Dr Phiri Ballito"</strong> in the SnapScan app.</p>
           <div style="width:150px;height:150px;background:var(--paper);border:2px solid var(--border);border-radius:12px;margin:0 auto 1.25rem;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;"><span style="font-size:2rem;">QR</span><span style="font-size:9px;color:var(--muted);font-weight:700;letter-spacing:1px;">DR PHIRI BALLITO</span></div>
-          <button class="pay-submit" style="max-width:300px;margin:0 auto;" onclick="doBookingAndPay('snapscan')">✅ Confirm Booking &amp; Payment Done</button>
+          <button class="pay-submit" style="max-width:300px;margin:0 auto;" onclick="doBookingAndPay('snapscan')"> Confirm Booking &amp; Payment Done</button>
         </div>
         <!-- Pay Later -->
         <div id="ib-pl-sec" style="display:none;">
           <div style="background:linear-gradient(135deg,rgba(27,67,50,.06),rgba(64,145,108,.08));border:1.5px solid rgba(27,67,50,.18);border-radius:16px;padding:1.5rem 1.6rem;margin-bottom:1rem;">
             <div style="display:flex;align-items:flex-start;gap:.85rem;">
-              <div style="font-size:1.8rem;flex-shrink:0;">📋</div>
+              <div style="font-size:1.8rem;flex-shrink:0;"></div>
               <div>
                 <div style="font-size:14px;font-weight:700;color:var(--charcoal);margin-bottom:.35rem;">Pay After Your Consultation</div>
                 <p style="font-size:12.5px;color:var(--muted);line-height:1.75;margin:0;">Book your appointment now and pay at the end of your consultation via card, EFT, or cash. Dr Phiri will be notified that payment is due on the day.</p>
@@ -208,9 +216,9 @@
             </div>
           </div>
           <div style="background:#fffbe6;border:1.5px solid #f5c842;border-radius:12px;padding:1rem 1.2rem;margin-bottom:1rem;font-size:12.5px;color:#7a6000;line-height:1.75;">
-            ⚠️ <strong>Please note:</strong> By confirming, you agree to settle the consultation fee on the day. Cancellations must be made at least 24 hours in advance.
+             <strong>Please note:</strong> By confirming, you agree to settle the consultation fee on the day. Cancellations must be made at least 24 hours in advance.
           </div>
-          <button class="pay-submit" style="background:var(--forest);" onclick="doBookingAndPay('paylater')">📅 Confirm Booking, Pay on the Day</button>
+          <button class="pay-submit" style="background:var(--forest);" onclick="doBookingAndPay('paylater')"> Confirm Booking, Pay on the Day</button>
         </div>
       </div>
     </div>
@@ -226,11 +234,11 @@
         <div class="si"><span class="si-lbl">Programme</span><span class="si-val" id="sum-plan">Foundation Plan</span></div>
         <div class="sum-total"><span>Total to Pay</span><strong id="sum-total-amt">R1,500</strong></div>
       </div>
-      <button class="book-confirm-btn" onclick="doBookingAndPay('card')">✅ Confirm Booking</button>
+      <button class="book-confirm-btn" onclick="doBookingAndPay('card')"> Confirm Booking</button>
       <div style="margin-top:.85rem;background:#fff;border:1px solid var(--border);border-radius:14px;padding:1.1rem;text-align:center;font-size:11.5px;color:var(--muted);line-height:1.85;">
-        🔒 Secure &amp; confidential<br>
-        📋 Receipt emailed on payment<br>
-        📞 Cancel 24hrs before<br><br>
+         Secure &amp; confidential<br>
+         Receipt emailed on payment<br>
+         Cancel 24hrs before<br><br>
         <strong style="color:var(--charcoal);">Questions?</strong><br>
         <a href="tel:0659893363" style="color:var(--forest);font-weight:700;">065 989 3363</a>
       </div>
@@ -240,7 +248,7 @@
         <div style="font-size:1.3rem;margin-bottom:.35rem;">📋</div>
         <div style="font-size:12px;font-weight:700;color:var(--charcoal);margin-bottom:.25rem;">Health Questionnaire</div>
         <div style="font-size:11px;color:var(--muted);margin-bottom:.75rem;line-height:1.6;">Please complete this before your appointment so Dr Phiri can personalise your care.</div>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdE4LwHMtT0Q1A9ZmP1G1PPhGhRT8KzXJ5v40d07uanrvkQPQ/viewform" target="_blank"
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdE4LwHMtT0Q1A9ZmP1G1PPhGhRT8KzXJ5v40d07uanrvkQPQ/viewform" target="_blank" rel="noopener"
            style="display:block;background:var(--forest);color:#fff;padding:.55rem 1rem;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;transition:opacity .2s;"
            onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
           Complete Now →
@@ -250,10 +258,10 @@
       <div style="margin-top:.85rem;background:var(--forest);border-radius:14px;padding:1.1rem;text-align:center;">
         <div style="font-size:10.5px;color:var(--mint);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:.65rem;">Follow Us</div>
         <div style="display:flex;justify-content:center;gap:8px;">
-          <a href="https://instagram.com/drphiri_gp?igsh=MWN3Mm5mbnNwc2dncw%3D%3D&utm_source=qr" target="_blank" class="f-soc">📸</a>
-          <a href="https://facebook.com/share/17Q68f3D3c/?mibextid=wwXlfr"  target="_blank" class="f-soc">👥</a>
-          <a href="https://tiktok.com/@drphiri_?_r=1&_t=ZS-95zulQxkQez"    target="_blank" class="f-soc">🎵</a>
-          <a href="https://wa.me/27659893363" target="_blank" class="f-soc">💬</a>
+          <a href="https://instagram.com/drphiri_gp?igsh=MWN3Mm5mbnNwc2dncw%3D%3D&utm_source=qr" target="_blank" rel="noopener" class="f-soc">📸</a>
+          <a href="https://facebook.com/share/17Q68f3D3c/?mibextid=wwXlfr"  target="_blank" rel="noopener" class="f-soc">👥</a>
+          <a href="https://tiktok.com/@drphiri_?_r=1&_t=ZS-95zulQxkQez"    target="_blank" rel="noopener" class="f-soc">🎵</a>
+          <a href="https://wa.me/27659893363" target="_blank" rel="noopener" class="f-soc">💬</a>
         </div>
       </div>
     </div>
@@ -283,7 +291,7 @@
   </div>
 </div>
 
-  <footer><div class="f-logo">Dr M Phiri · <span>Medical Weight Loss</span></div><div class="f-links"><a href="index.html">Home</a><a href="services.html">Services</a><a href="contact.html">Contact</a></div><div class="f-social"><a class="f-soc" href="https://instagram.com" target="_blank">📸</a><a class="f-soc" href="https://wa.me/27659893363" target="_blank">💬</a></div><p>© 2025 Dr M Phiri · Ballito</p></footer>
+  <footer><div class="f-logo">Dr M Phiri · <span>Medical Weight Loss</span></div><div class="f-links"><a href="index.html">Home</a><a href="services.html">Services</a><a href="contact.html">Contact</a></div><div class="f-social"><a class="f-soc" href="https://instagram.com" target="_blank" rel="noopener">📸</a><a class="f-soc" href="https://wa.me/27659893363" target="_blank" rel="noopener">💬</a></div><p>© 2025 Dr M Phiri · Ballito</p></footer>
 </div><!-- /page-booking -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="js.asset/script.js"></script>

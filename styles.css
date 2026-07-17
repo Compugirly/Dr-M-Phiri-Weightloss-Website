@@ -1565,10 +1565,10 @@ nav{
 .plan-pill{
   display:flex;flex-direction:column;align-items:center;
   padding:.9rem 1.1rem;min-width:130px;
-  border:2px solid var(--border);border-radius:12px;
+  border:1px solid var(--border);border-radius:12px;
   cursor:pointer;background:#fff;transition:all .22s;
 }
-.plan-pill.sel{border-color:var(--forest);background:var(--mint-pale);}
+.plan-pill.sel{border-color:var(--forest);background:var(--mint-pale);box-shadow:inset 0 0 0 1px rgba(27,67,50,.08);}
 .plan-pill:hover:not(.sel){border-color:var(--forest-lt);}
 .pp-name{font-size:14px;font-weight:800;color:var(--charcoal);}
 .pp-price{font-family:var(--display);font-size:1.1rem;color:var(--forest);font-weight:800;}
